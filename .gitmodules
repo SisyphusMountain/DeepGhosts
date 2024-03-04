@@ -1,0 +1,9 @@
+[submodule "sample_script"]
+	path = sample_script
+	url = https://github.com/SisyphusMountain/sample_script
+[submodule "gene_transfer_script"]
+	path = gene_transfer_script
+	url = https://github.com/SisyphusMountain/gene_transfer_script
+[submodule "extract_extant_script"]
+	path = extract_extant_script
+	url = https://github.com/SisyphusMountain/extract_extant_script
