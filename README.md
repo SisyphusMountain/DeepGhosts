@@ -1,5 +1,7 @@
-To compile, you need to have installed the rust package manager, [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html). 
-You need to have the R "ape" library installed.
+Dependencies:
+- rust package manager, [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html). 
+- R "ape" library
+- The [ALE](https://github.com/ssolo/ALE/blob/master/INSTALL.md) software, installed on PATH
 
 
 ```
