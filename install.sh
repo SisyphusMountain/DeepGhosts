@@ -7,7 +7,7 @@ DEST_DIR="resources"
 
 
 mkdir -p $DEST_DIR
-
+mkdir -p Output
 
 for SUBMODULE in "${SUBMODULES[@]}"; do
   echo "Building $SUBMODULE..."
