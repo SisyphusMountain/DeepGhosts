@@ -1,0 +1,6 @@
+/Output
+/resources/__pycache__/
+/resources/.snakemake/
+/resources/gene_transfer_script
+/resources/sample_script
+/resource/extract_extant_script

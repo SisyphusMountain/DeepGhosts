@@ -32,7 +32,7 @@ from utils import *
 # Utiliser rules.output pour les fichiers intermédiaires.
 # Créer GitHub pour le dossier
 
-
+PARENT_PATH = os.path.normpath(os.getcwd() + os.sep + os.pardir)
 RESOURCES_PATH = os.path.normpath(os.getcwd() + os.sep + os.pardir) + "/resources"
 
 GENERATE_TRANSFERS_FILE_SCRIPT = RESOURCES_PATH + "/generate_transfers_file.py"
@@ -44,7 +44,7 @@ EXTRACT_EXTANT_SPECIES_SCRIPT = RESOURCES_PATH + '/extract_extant_script'
 
 ## OUTPUT FOLDERS PATHS
 # Output folder for everything
-OUTPUT_FOLDER = RESOURCES_PATH + '/Output/test/'
+OUTPUT_FOLDER = PARENT_PATH + '/Output/test/'
 # Reconciliations
 
 
@@ -74,40 +74,12 @@ rule all:
         proof_reconciliation = expand(OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations/done", sp_tree_index = range(N_SP_TREES))
 
 
-rule create_transfers_file:
-    input:
-        branch_length = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/branch_length.txt",
-    output:
-        transfers = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/transfers_file.txt"
-    params:
-        n_genes = N_GENES,
-        distribution = DISTRIBUTION,
-        seed = generate_seed_from_parameters(EXTANT_SPECIES,
-                                             N_GENES,
-                                             TRANSFER_RATE,
-                                             DEATH_RATE,
-                                             BIRTH_RATE,
-                                             SEED,
-                                             ),
-        file_name = "transfers_file.txt",
-        folder = OUTPUT_FOLDER
-    run:
-        seed = generate_seed_from_parameters(params.seed, wildcards.sp_tree_index)
-        with open(input.branch_length, "r") as f:
-            lines = f.readlines()
-            br_length = float(lines[0])
-        
-        average_transfers = br_length*TRANSFER_RATE
-
-        path = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/transfers_file.txt"
-
-        generate_transfers_file(params.n_genes,
-                                average_transfers,
-                                params.distribution,
-                                seed,
-                                path,)
-
 rule generate_species_tree:
+    """Simulates species tree with names only on leaves,
+    using an R script and the ape package. The tree is then
+    written in newick format. We get the tree with extinct species included,
+    as well as the tree containing only extant species. We also get the
+    sum of branch lengths in the tree"""
     output:
         complete_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_COMPLETE,
         extant_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_EXTANT,
@@ -142,8 +114,48 @@ rule generate_species_tree:
                               total_branch_length_txt,
                               params.extant_nodes,)
 
+rule create_transfers_file:
+    """Create the desired number of transfer for each gene tree,
+    distributed according to a Poisson distribution of parameter
+    branch_length*transfer_rate."""
+    input:
+        branch_length = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/branch_length.txt",
+    output:
+        transfers = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/transfers_file.txt"
+    params:
+        n_genes = N_GENES,
+        distribution = DISTRIBUTION,
+        seed = generate_seed_from_parameters(EXTANT_SPECIES,
+                                             N_GENES,
+                                             TRANSFER_RATE,
+                                             DEATH_RATE,
+                                             BIRTH_RATE,
+                                             SEED,
+                                             ),
+        file_name = "transfers_file.txt",
+        folder = OUTPUT_FOLDER
+    run:
+        seed = generate_seed_from_parameters(params.seed, wildcards.sp_tree_index)
+        with open(input.branch_length, "r") as f:
+            lines = f.readlines()
+            br_length = float(lines[0])
+        
+        average_transfers = br_length*TRANSFER_RATE
+
+        path = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/transfers_file.txt"
+
+        generate_transfers_file(params.n_genes,
+                                average_transfers,
+                                params.distribution,
+                                seed,
+                                path,)
 
 rule generate_gene_tree:
+    """
+    Using the specified numbers of transfers created by the rule
+    create_transfers_file, generate the gene trees with random horizontal
+    gene transfer events. The gene trees are written in newick format.
+    """
     input:
         complete_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_COMPLETE,
         transfers = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/transfers_file.txt",
@@ -171,7 +183,13 @@ rule generate_gene_tree:
 
 
 rule sampling_trees:
-    ## The script samples leaves, but only from the extant ones
+    """
+    Sample N_SAMPLED_NODES species from the extant species tree.
+    Uses the species tree and the gene tree created by the rules
+    generate_species_tree and generate_gene_tree.
+    Then, for each gene tree, sample the gene tree to keep only the
+    sampled species. The sampled gene trees are written in newick format.
+    """
     input:
         complete_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_COMPLETE,
         extant_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_EXTANT,
@@ -210,6 +228,11 @@ rule sampling_trees:
 
 
 rule prepare_species_tree_for_reconciliation:
+    """
+    Prepare the sampled species tree for reconciliation by running the
+    ALEobserve and ALEml_undated commands.
+    Needs the output of the rule sampling_trees.
+    """
     input:
         sampled_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk"
     output:
@@ -237,6 +260,10 @@ rule prepare_species_tree_for_reconciliation:
 
 
 rule prepare_gene_tree_for_reconciliation:
+    """
+    Prepare the sampled gene trees for reconciliation by running 
+    the ALEobserve command.
+    """
     input:
         sampled_gene_trees_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_gene_trees_proof.txt"
     output:
@@ -275,6 +302,17 @@ rule prepare_gene_tree_for_reconciliation:
 
 
 rule reconcile_gene_tree:
+    """
+    Reconciles 10% of the prepared sampled gene trees output by the rule
+    prepare_gene_tree_for_reconciliation with the prepared
+    sampled species tree output by the rule 
+    prepare_species_tree_for_reconciliation
+    using the ALEml_undated command.
+
+    Thanks to these reconciliations, we will be able to estimate the
+    parameters of the DTL model with ALE, and run fixed-rate reconciliations
+    for all the gene trees.
+    """
     input:
         prepared_gene_tree_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/prepared_gene_trees_proof.txt",
         prepared_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk",
@@ -311,6 +349,10 @@ rule reconcile_gene_tree:
 
 
 rule extract_rates:
+    """
+    Extracts the rates of duplications, transfers and losses from the
+    reconciliations output by the rule reconcile_gene_tree.
+    """
     input:
         proof_reconciliations_estimation = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations_estimation/done",
     output:
@@ -345,6 +387,16 @@ rule extract_rates:
 
 
 rule reconcile_all_gene_trees:
+    """
+    Reconciles all the prepared sampled gene trees output by the rule
+    prepare_gene_tree_for_reconciliation with the prepared
+    sampled species tree output by the rule
+    prepare_species_tree_for_reconciliation
+    using the ALEml_undated command.
+
+    Here we need the estimated DTL parameters obtained from the rule
+    extract_rates because we do fixed-rate reconciliations.
+    """
     input:
         prepared_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk",
         prepared_gene_tree_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/prepared_gene_trees_proof.txt",
