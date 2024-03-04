@@ -4,33 +4,24 @@ import numpy as np
 import numpy.random as npr
 import shutil
 from utils import *
-## Choix de construction:
-# scripts en python dans les règles : plus facile d'utiliser python que bash
-# parallélisme entre arbres d'espèce, mais tous les gènes d'un arbre sont traités par 1 seul thread.
-# Cela permet d'éviter de gâcher tout le temps CPU à calculer le DAG sur 1 thread.
-# Génération de l'arbre d'espèces avec ape (R), mais pas d'utilisation de drop.fossils car ça ne marche pas
-# pour les gros arbres. A la place, on utilise un script Rust.
 
 
-## DESCRIPTION :
-# 1. Génération d'arbre d'espèces (birth-death à paramètres constants) jusqu'à EXTANT_SPECIES espèces extantes. (generate_species_tree)
-# 2. Choix d'un nombre de transferts horizontaux au sein de l'arbre complet, selon une loi de Poisson de paramètre
-# longueur_arbre_complet*taux_transfert (generate_transfers_file)
-# 3. Répartition aléatoire et uniforme de ces transferts sur l'arbre, puis calcul des arbres de gène correspondants. (generate_gene_trees)
-# 4. Echantillonnage uniforme d'un nombre N_SAMPLED_NODES d'espèces parmi les espèces extantes.
-# 5. Réconciliation de 10% des arbres de gène avec l'arbre d'espèce. (reconcile_gene_trees)
-# 6. Calcul des paramètres DTL moyens inférés lors de l'étape 5. (extract_rates)
-# 7. Réconciliation de tous les arbres de gène avec l'arbre d'espèce, avec les paramètres DTL fixés comme ceux inférés précédemment. (reconcile_all_gene_trees)
+"""
+## Construction Choices:
+- Python scripts in rules: It's easier to use Python than bash for scripting.
+- Parallelism is employed between species trees, but all genes within a tree are processed by a single thread to prevent CPU time wastage on DAG computations.
+- Species tree generation is performed using the `ape` package in R; however, `drop.fossils` is not utilized for large trees, and a Rust script is employed instead.
 
+## DESCRIPTION:
+1. **Generate Species Tree:** Generates a species tree (birth-death model with constant parameters) until reaching a specified number of extant species (`EXTANT_SPECIES`). 
+2. **Generate Transfers File:** Determines a number of horizontal transfers within the complete tree based on a Poisson distribution with the parameter being the product of the complete tree length and a transfer rate.
+3. **Generate Gene Trees:** Distributes transfers randomly and uniformly over the tree, then calculates the corresponding gene trees.
+4. **Sample Nodes:** Uniformly samples a specified number (`N_SAMPLED_NODES`) of species from the extant species.
+5. **Reconcile Gene Trees:** Reconciles 10% of the gene trees with the species tree.
+6. **Extract Rates:** Calculates average DTL (Duplication, Transfer, and Loss) parameters inferred in the previous reconciliation step.
+7. **Reconcile All Gene Trees:** Performs reconciliation of all gene trees with the species tree using previously inferred DTL parameters.
 
-
-## SCRIPTS PATHS
-# utiliser paths relatifs pour les scripts !
-# Contacter informaticiens du LBBE pour installer ALE
-# Essayer de faire tourner les différentes rules séparément.
-# Séparer la partie en amont du programme de la partie en aval du programme.
-# Utiliser rules.output pour les fichiers intermédiaires.
-# Créer GitHub pour le dossier
+"""
 
 PARENT_PATH = os.path.normpath(os.getcwd() + os.sep + os.pardir)
 RESOURCES_PATH = os.path.normpath(os.getcwd() + os.sep + os.pardir) + "/resources"
