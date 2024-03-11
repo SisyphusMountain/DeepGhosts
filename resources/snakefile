@@ -92,6 +92,7 @@ rule generate_species_tree:
         output_folder = OUTPUT_FOLDER,
         extant_nodes = EXTANT_SPECIES,
         extract_extant_script = EXTRACT_EXTANT_SPECIES_SCRIPT,
+        time = "00:10:00", cpus = "1", mem="1G", name = "generate_species_tree"
     run:
         total_branch_length_txt = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/branch_length.txt"
         # Construct a different seed for each new species tree.
@@ -127,7 +128,8 @@ rule create_transfers_file:
                                              SEED,
                                              ),
         file_name = "transfers_file.txt",
-        folder = OUTPUT_FOLDER
+        folder = OUTPUT_FOLDER,
+        time = "00:01:00", cpus = "1", mem="1G", name = "create_transfers_file"
     run:
         seed = generate_seed_from_parameters(params.seed, wildcards.sp_tree_index)
         with open(input.branch_length, "r") as f:
@@ -161,7 +163,8 @@ rule generate_gene_tree:
                                              BIRTH_RATE,
                                              SEED,),
         output_complete = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/complete/",
-        gene_transfer_script = GENE_TRANSFER_SCRIPT
+        gene_transfer_script = GENE_TRANSFER_SCRIPT,
+        time = "00:10:00", cpus = "1", mem="1G", name = "generate_gene_tree"
 
     output:
         generated_gene_trees_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/complete/tree_0/genes/generated_gene_trees_proof.txt",
@@ -200,6 +203,7 @@ rule sampling_trees:
         output_folder = OUTPUT_FOLDER,
         start_index = START_INDEX,
         end_index = END_INDEX,
+        time = "00:10:00", cpus = "1", mem="1G", name = "sampling_trees"
     output:
         sampled_gene_trees_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_gene_trees_proof.txt",
         sampled_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk",
@@ -231,6 +235,8 @@ rule prepare_species_tree_for_reconciliation:
         sampled_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk"
     output:
         sampled_species_tree_ale = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk"
+    params:
+        time = "00:10:00", cpus = "1", mem="1G", name = "prepare_species_tree_for_reconciliation"
     run:
         import os
         import subprocess
@@ -265,6 +271,7 @@ rule prepare_gene_tree_for_reconciliation:
     params:
         start_index = START_INDEX,
         end_index = END_INDEX,
+        time = "00:10:00", cpus = "1", mem="1G", name = "prepare_gene_tree_for_reconciliation"
     run:
         # Define the paths
         output_prepared_folder = os.path.join(OUTPUT_FOLDER, f"species_tree_{wildcards.sp_tree_index}", "prepared")
@@ -312,7 +319,8 @@ rule reconcile_gene_tree:
         prepared_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk",
     params:
         start_index = START_INDEX,
-        end_index_estimation = END_INDEX_ESTIMATION
+        end_index_estimation = END_INDEX_ESTIMATION,
+        time = "02:00:00", cpus = "1", mem="1G", name = "reconcile_gene_tree"
     output:
         proof_reconciliation_estimation = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations_estimation/done",
     run:
@@ -351,6 +359,8 @@ rule extract_rates:
         proof_reconciliations_estimation = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations_estimation/done",
     output:
         rates = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/rates.txt"
+    params:
+        time = "00:10:00", cpus = "1", mem="1G", name = "extract_rates"
     run:
         import os
 
@@ -398,6 +408,7 @@ rule reconcile_all_gene_trees:
     params:
         start_index = START_INDEX,
         end_index = END_INDEX,
+        time = "02:00:00", cpus = "1", mem="1G", name = "reconcile_all_gene_trees"
     output:
         proof_reconciliation = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations/done",
     run:
