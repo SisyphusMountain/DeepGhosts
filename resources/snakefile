@@ -6,7 +6,7 @@ import shutil
 from utils import *
 
 # TODO: Modify script to sample death rate/transfer rate/sampled species/total species from a distribution.
-# Add expected times for each rule.
+
 
 
 """
