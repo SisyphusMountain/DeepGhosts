@@ -3,15 +3,17 @@
 # Load necessary library
 library(ape)
 
-# Function to generate and save a phylogenetic tree with named internal nodes
-generate_phylo_tree <- function(seed, n, b, d, file_path_complete) {
+# Function to generate and save a phylogenetic tree
+generate_phylo_tree <- function(seed,
+                                n,
+                                b,
+                                d,
+                                file_path_complete) {
   set.seed(seed)
   tree <- rphylo(n, b, d, fossils = TRUE)
-  # Name internal nodes
-  tree$node.label <- paste("in", n:((2 * n) - 2))
-  # Set the tree root length to 0 and save the tree
-  write.tree(tree, file = file_path_complete,
-             append = FALSE, digits = 5, tree.names = FALSE)
+  # Set the tree root length to 0
+  write.tree(tree, file = file_path_complete, append = FALSE,
+             digits = 5, tree.names = FALSE)
   tree
 }
 
