@@ -7,3 +7,6 @@
 [submodule "extract_extant_script"]
 	path = extract_extant_script
 	url = https://github.com/SisyphusMountain/extract_extant_script
+[submodule "newick_parser"]
+	path = newick_parser
+	url = https://github.com/SisyphusMountain/newick_parser
