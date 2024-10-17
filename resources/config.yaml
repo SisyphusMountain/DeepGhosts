@@ -1,0 +1,24 @@
+# Paths
+parent_path: ..
+resources_path: ../resources/
+output_folder: ../Output/test/
+
+# Constants and parameters
+n_sp_trees: 10
+n_genes: 10
+start_index: 0
+seed: 14
+distribution: "Poisson"
+parameters_estimation_gene_proportion: 0.1
+
+# Random parameter ranges
+death_rate_low: 0.1
+death_rate_high: 0.5
+transfer_rate_low: 0.01
+transfer_rate_high: 0.05
+sampled_species_low: 5
+sampled_species_high: 15
+extant_species_low: 30
+extant_species_high: 50
+birth_rate_low: 0.8
+birth_rate_high: 1.2

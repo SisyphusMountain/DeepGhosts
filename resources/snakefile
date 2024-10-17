@@ -1,437 +1,311 @@
 #! /usr/bin/env python3
-
-import subprocess
+from IPython import embed # debug import
 import os
 import numpy as np
 import numpy.random as npr
-import shutil
-from utils import *
+from pathlib import Path
+from utils import generate_seed_from_parameters
+from params import (
+    generate_species_tree_params,
+    get_params_generate_species_tree,
+    get_params_create_transfers_file,
+    get_params_generate_gene_tree,
+    get_params_sampling_trees,
+    get_params_reconcile_gene_tree,
+    get_params_extract_rates,
+    get_params_reconcile_all_gene_trees,
+)
 
-# TODO: Modify script to sample death rate/transfer rate/sampled species/total species from a distribution.
-
+configfile: 'config.yaml'
 
 """
 ## Construction Choices:
-- Python scripts in rules: It's easier to use Python than bash for scripting.
-- Parallelism is employed between species trees, but all genes within a tree are processed by a single thread to prevent CPU time wastage on DAG computations.
-- Species tree generation is performed using the `ape` package in R; however, `drop.fossils` is not utilized for large trees, and a Rust script is employed instead.
-
-## DESCRIPTION:
-1. **Generate Species Tree:** Generates a species tree (birth-death model with constant parameters) until reaching a specified number of extant species (`EXTANT_SPECIES`). 
-2. **Generate Transfers File:** Determines a number of horizontal transfers within the complete tree based on a Poisson distribution with the parameter being the product of the complete tree length and a transfer rate.
-3. **Generate Gene Trees:** Distributes transfers randomly and uniformly over the tree, then calculates the corresponding gene trees.
-4. **Sample Nodes:** Uniformly samples a specified number (`N_SAMPLED_NODES`) of species from the extant species.
-5. **Reconcile Gene Trees:** Reconciles 10% of the gene trees with the species tree.
-6. **Extract Rates:** Calculates average DTL (Duplication, Transfer, and Loss) parameters inferred in the previous reconciliation step.
-7. **Reconcile All Gene Trees:** Performs reconciliation of all gene trees with the species tree using previously inferred DTL parameters.
-
+- Functions are called within `run` blocks, passing only the necessary variables.
+- This approach improves modularity and allows functions to be tested independently of Snakemake.
 """
 
-PARENT_PATH = os.path.normpath(os.getcwd() + os.sep + os.pardir)
-RESOURCES_PATH = os.path.normpath(os.getcwd() + os.sep + os.pardir) + "/resources"
+PARENT_PATH = Path(config['parent_path']).resolve()
+RESOURCES_PATH = Path(config['resources_path']).resolve()
 
-GENERATE_TRANSFERS_FILE_SCRIPT = RESOURCES_PATH + "/generate_transfers_file.py"
-R_SCRIPT = RESOURCES_PATH + '/species_tree_generator.R'
-GENE_TRANSFER_SCRIPT = RESOURCES_PATH + '/gene_transfer_script'
-SAMPLE_SCRIPT = RESOURCES_PATH + '/sample_script'
-EXTRACT_EXTANT_SPECIES_SCRIPT = RESOURCES_PATH + '/extract_extant_script'
-
+R_SCRIPT = RESOURCES_PATH / "species_tree_generator.R"
+GENE_TRANSFER_SCRIPT = RESOURCES_PATH / "gene_transfer_script"
+SAMPLE_SCRIPT = RESOURCES_PATH / "sample_script"
+EXTRACT_EXTANT_SPECIES_SCRIPT = RESOURCES_PATH / "extract_extant_script"
 
 ## OUTPUT FOLDERS PATHS
-# Output folder for everything
-OUTPUT_FOLDER = PARENT_PATH + '/Output/test/'
-# Reconciliations
+OUTPUT_FOLDER = Path(config['output_folder']).resolve()
 
-
-## OUTPUT FILES PATHS. Do not change these.
+## OUTPUT FILES PATHS
 OUTPUT_NAME_COMPLETE = "complete_species_tree.nwk"
 OUTPUT_NAME_EXTANT = "extant_species_tree.nwk"
 
-
-
-## Define constants or parameters here
-N_SP_TREES = 10
-EXTANT_SPECIES = 40
-N_SAMPLED_NODES = 8
-BIRTH_RATE = 1
-DEATH_RATE = 0.3
-N_GENES = 10
-START_INDEX = 0
-TRANSFER_RATE = 0.025
+N_SP_TREES = config['n_sp_trees']
+N_GENES = config['n_genes']
+START_INDEX = config['start_index']
+SEED = config['seed']
+DISTRIBUTION = config['distribution']
+PARAMETERS_ESTIMATION_GENE_PROPORTION = config['parameters_estimation_gene_proportion']
+END_INDEX_ESTIMATION = int(N_GENES * PARAMETERS_ESTIMATION_GENE_PROPORTION)
 END_INDEX = N_GENES
-SEED = 14
-DISTRIBUTION = "Poisson"
-PARAMETERS_ESTIMATION_GENE_PROPORTION = 0.1
-END_INDEX_ESTIMATION = int(END_INDEX*PARAMETERS_ESTIMATION_GENE_PROPORTION)
+
+# Generate species tree parameters
+species_tree_params = generate_species_tree_params(N_SP_TREES, N_GENES, SEED, config)
 
 rule all:
     input:
-        proof_reconciliation = expand(OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations/done", sp_tree_index = range(N_SP_TREES))
-
+        proof_reconciliation=expand(
+            OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations/done",
+            sp_tree_index=range(N_SP_TREES),
+        )
 
 rule generate_species_tree:
-    """Simulates species tree with names only on leaves,
-    using an R script and the ape package. The tree is then
-    written in newick format. We get the tree with extinct species included,
-    as well as the tree containing only extant species. We also get the
-    sum of branch lengths in the tree"""
+    """Simulates species tree with names only on leaves."""
     output:
-        complete_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_COMPLETE,
-        extant_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_EXTANT,
-        branch_length = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/branch_length.txt",
+        complete_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / OUTPUT_NAME_COMPLETE),
+        extant_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / OUTPUT_NAME_EXTANT),
+        branch_length=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "branch_length.txt"),
+
     params:
-        seed = generate_seed_from_parameters(EXTANT_SPECIES,
-                                             N_GENES,
-                                             TRANSFER_RATE,
-                                             DEATH_RATE,
-                                             BIRTH_RATE,
-                                             SEED,),
-        r_script = R_SCRIPT,
-        extant_species = EXTANT_SPECIES,
-        birth_rate = BIRTH_RATE,
-        death_rate = DEATH_RATE,
-        output_folder = OUTPUT_FOLDER,
-        extant_nodes = EXTANT_SPECIES,
-        extract_extant_script = EXTRACT_EXTANT_SPECIES_SCRIPT,
-        time = "00:10:00", cpus = "1", mem="1G", name = "generate_species_tree"
+        lambda wildcards: get_params_generate_species_tree(
+            wildcards,
+            species_tree_params,
+            OUTPUT_FOLDER,
+            R_SCRIPT,
+            EXTRACT_EXTANT_SPECIES_SCRIPT,
+            SEED,
+            N_GENES,
+        )
     run:
-        total_branch_length_txt = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/branch_length.txt"
-        # Construct a different seed for each new species tree.
-        seed = generate_seed_from_parameters(params.seed, wildcards.sp_tree_index)
-        extant_tree = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/" # Leave this as is, it is how the rust script is coded.
-        generate_species_tree(params.extant_species,
-                              params.birth_rate,
-                              params.death_rate,
-                              output.complete_tree,
-                              extant_tree,
-                              seed,
-                              params.r_script,
-                              params.extract_extant_script,
-                              total_branch_length_txt,
-                              params.extant_nodes,)
+        from scripts.generate_species_tree import generate_species_tree
+        params = params[0]
+        # import IPython; IPython.embed()
+        generate_species_tree(
+            extant_species=params['extant_species'],
+            birth_rate=params['birth_rate'],
+            death_rate=params['death_rate'],
+            sp_tree_index=wildcards.sp_tree_index,
+            output_folder=OUTPUT_FOLDER,
+            output_complete_tree=output.complete_tree,
+            seed=params['seed'],
+            r_script=params['r_script'],
+            extract_extant_script=params['extract_extant_script'],
+            total_branch_length_txt=output.branch_length,
+            n_extant_nodes=params['n_extant_nodes'],
+        )
 
 rule create_transfers_file:
-    """Create the desired number of transfer for each gene tree,
-    distributed according to a Poisson distribution of parameter
-    branch_length*transfer_rate."""
+    """Create the desired number of transfers for each gene tree."""
     input:
-        branch_length = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/branch_length.txt",
+        branch_length=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "branch_length.txt"),
     output:
-        transfers = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/transfers_file.txt"
+        transfers=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "transfers_file.txt")
+
     params:
-        n_genes = N_GENES,
-        distribution = DISTRIBUTION,
-        seed = generate_seed_from_parameters(EXTANT_SPECIES,
-                                             N_GENES,
-                                             TRANSFER_RATE,
-                                             DEATH_RATE,
-                                             BIRTH_RATE,
-                                             SEED,
-                                             ),
-        file_name = "transfers_file.txt",
-        folder = OUTPUT_FOLDER,
-        time = "00:01:00", cpus = "1", mem="1G", name = "create_transfers_file"
+        lambda wildcards: get_params_create_transfers_file(
+            wildcards,
+            species_tree_params,
+            OUTPUT_FOLDER,
+            DISTRIBUTION,
+            N_GENES,
+            SEED,
+        )
     run:
-        seed = generate_seed_from_parameters(params.seed, wildcards.sp_tree_index)
-        with open(input.branch_length, "r") as f:
-            lines = f.readlines()
-            br_length = float(lines[0])
-        
-        average_transfers = br_length*TRANSFER_RATE
-
-        path = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/transfers_file.txt"
-
-        generate_transfers_file(params.n_genes,
-                                average_transfers,
-                                params.distribution,
-                                seed,
-                                path,)
+        from scripts.create_transfers_file import create_transfers_file
+        params = params[0]
+        create_transfers_file(
+            branch_length_file=input.branch_length,
+            transfers_file=output.transfers,
+            n_genes=params['n_genes'],
+            distribution=params['distribution'],
+            seed=params['seed'],
+            transfer_rate=params['transfer_rate'],
+        )
 
 rule generate_gene_tree:
-    """
-    Using the specified numbers of transfers created by the rule
-    create_transfers_file, generate the gene trees with random horizontal
-    gene transfer events. The gene trees are written in newick format.
-    """
+    """Generate gene trees with random horizontal gene transfer events."""
     input:
-        complete_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_COMPLETE,
-        transfers = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/transfers_file.txt",
-    params:
-        seed = generate_seed_from_parameters(EXTANT_SPECIES,
-                                             N_GENES,
-                                             TRANSFER_RATE,
-                                             DEATH_RATE,
-                                             BIRTH_RATE,
-                                             SEED,),
-        output_complete = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/complete/",
-        gene_transfer_script = GENE_TRANSFER_SCRIPT,
-        time = "00:10:00", cpus = "1", mem="1G", name = "generate_gene_tree"
-
+        complete_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / OUTPUT_NAME_COMPLETE),
+        transfers=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "transfers_file.txt"),
     output:
-        generated_gene_trees_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/complete/tree_0/genes/generated_gene_trees_proof.txt",
+        generated_gene_trees_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/complete/tree_0/genes/generated_gene_trees_proof.txt"),
+    params:
+        lambda wildcards: get_params_generate_gene_tree(
+            wildcards,
+            species_tree_params,
+            OUTPUT_FOLDER,
+            GENE_TRANSFER_SCRIPT,
+            SEED,
+            N_GENES,
+        )
     run:
-        import os
-        import subprocess
-        # Create the output directory if it doesn't exist
-        os.makedirs(params.output_complete, exist_ok=True)
-        seed = generate_seed_from_parameters(params.seed, wildcards.sp_tree_index)
-        generate_gene_trees(params.gene_transfer_script, input.complete_species_tree, input.transfers, params.output_complete, seed)
-        with open(output.generated_gene_trees_proof, "w+") as f:
-            f.write("done!")
-
+        from scripts.generate_gene_tree import generate_gene_tree
+        params = params[0]
+        generate_gene_tree(
+            complete_species_tree=input.complete_species_tree,
+            transfers_file=input.transfers,
+            output_complete=params['output_complete'],
+            seed=params['seed'],
+            gene_transfer_script=params['gene_transfer_script'],
+            generated_gene_trees_proof=output.generated_gene_trees_proof,
+        )
 
 rule sampling_trees:
-    """
-    Sample N_SAMPLED_NODES species from the extant species tree.
-    Uses the species tree and the gene tree created by the rules
-    generate_species_tree and generate_gene_tree.
-    Then, for each gene tree, sample the gene tree to keep only the
-    sampled species. The sampled gene trees are written in newick format.
-    """
+    """Sample species from the extant species tree and sample gene trees."""
     input:
-        complete_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_COMPLETE,
-        extant_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/" + OUTPUT_NAME_EXTANT,
-        generated_gene_trees_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/complete/tree_0/genes/generated_gene_trees_proof.txt",
-    params:
-        sample_script = SAMPLE_SCRIPT,
-        seed = generate_seed_from_parameters(EXTANT_SPECIES,
-                                             N_GENES,
-                                             TRANSFER_RATE,
-                                             DEATH_RATE,
-                                             BIRTH_RATE,
-                                             SEED,),
-        n_sampled_nodes = N_SAMPLED_NODES,
-        output_folder = OUTPUT_FOLDER,
-        start_index = START_INDEX,
-        end_index = END_INDEX,
-        time = "00:10:00", cpus = "1", mem="1G", name = "sampling_trees"
+        complete_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / OUTPUT_NAME_COMPLETE),
+        extant_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / OUTPUT_NAME_EXTANT),
+        generated_gene_trees_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/complete/tree_0/genes/generated_gene_trees_proof.txt"),
     output:
-        sampled_gene_trees_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_gene_trees_proof.txt",
-        sampled_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk",
+        sampled_gene_trees_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_gene_trees_proof.txt"),
+        sampled_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk"),
+    params:
+        lambda wildcards: get_params_sampling_trees(
+            wildcards,
+            species_tree_params,
+            OUTPUT_FOLDER,
+            SAMPLE_SCRIPT,
+            START_INDEX,
+            END_INDEX,
+            SEED,
+            N_GENES,
+        )
     run:
-        seed = generate_seed_from_parameters(params.seed, wildcards.sp_tree_index)
-        output_dir = params.output_folder + f"species_tree_{wildcards.sp_tree_index}/sampled/sampled_trees/"
-        gene_trees_folder = params.output_folder + f"species_tree_{wildcards.sp_tree_index}/complete/tree_0/"
-        sample_trees(params.sample_script,
-                     input.complete_species_tree,
-                     input.extant_species_tree,
-                     gene_trees_folder,
-                     params.n_sampled_nodes,
-                     params.start_index,
-                     params.end_index,
-                     output_dir,
-                     seed)
+        from scripts.sampling_trees import sample_trees
+        params = params[0]
+        generated_gene_trees_proof = Path(input.generated_gene_trees_proof)
+        generated_gene_trees_folder = generated_gene_trees_proof.parent.parent
+        generated_gene_trees_folder = str(generated_gene_trees_folder)
+        sample_trees(
+            complete_species_tree=input.complete_species_tree,
+            extant_species_tree=input.extant_species_tree,
+            generated_gene_trees_folder=generated_gene_trees_folder,
+            n_sampled_nodes=params['n_sampled_nodes'],
+            start_index=params['start_index'],
+            end_index=params['end_index'],
+            output_dir=os.path.dirname(output.sampled_gene_trees_proof),
+            seed=params['seed'],
+            sample_script=SAMPLE_SCRIPT,
+        )
+        print(f"sampled gene {wildcards.sp_tree_index}")
         with open(output.sampled_gene_trees_proof, "w+") as f:
             f.write("done!")
 
-
-
 rule prepare_species_tree_for_reconciliation:
-    """
-    Prepare the sampled species tree for reconciliation by running the
-    ALEobserve and ALEml_undated commands.
-    Needs the output of the rule sampling_trees.
-    """
+    """Prepare the sampled species tree for reconciliation."""
     input:
-        sampled_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk"
+        sampled_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk"),
     output:
-        sampled_species_tree_ale = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk"
+        sampled_species_tree_ale=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk")
     params:
-        time = "00:10:00", cpus = "1", mem="1G", name = "prepare_species_tree_for_reconciliation"
+        time="00:10:00",
+        cpus="1",
+        mem="1G",
+        name="prepare_species_tree_for_reconciliation",
     run:
-        import os
-        import subprocess
-        import shutil
-        # Define the paths
-        prepared_folder = os.path.join(OUTPUT_FOLDER, f"species_tree_{wildcards.sp_tree_index}", "prepared/")
-        # Create the output directory if it doesn't exist
-        os.makedirs(prepared_folder, exist_ok=True)
-
-        # Change to the prepared directory
-        os.chdir(prepared_folder)
-
-        # Run ALEobserve and ALEml_undated commands
-        subprocess.run(f"ALEobserve {input.sampled_species_tree}", shell=True, check=True)
-        subprocess.run(f"ALEml_undated {input.sampled_species_tree} {input.sampled_species_tree}.ale output_species_tree=y sample=0 delta=0 tau=0 lambda=0", shell=True, check=True)
-        # Move generated file to desired location
-        ale_sp_tree_file = os.path.join(prepared_folder, f"sampled_species_tree.nwk_sampled_species_tree.nwk.ale.spTree")
-        shutil.move(ale_sp_tree_file, output.sampled_species_tree_ale)
-        # Change directory back to OUTPUT_FOLDER
-        os.chdir(OUTPUT_FOLDER)
-
+        from scripts.prepare_species_tree_for_reconciliation import prepare_species_tree_for_reconciliation
+        prepare_species_tree_for_reconciliation(
+            sampled_species_tree=input.sampled_species_tree,
+            sampled_species_tree_ale=output.sampled_species_tree_ale,
+        )
 
 rule prepare_gene_tree_for_reconciliation:
-    """
-    Prepare the sampled gene trees for reconciliation by running 
-    the ALEobserve command.
-    """
+    """Prepare the sampled gene trees for reconciliation by running ALEobserve."""
     input:
-        sampled_gene_trees_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_gene_trees_proof.txt"
+        sampled_gene_trees_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_gene_trees_proof.txt"),
     output:
-        prepared_gene_trees_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/prepared_gene_trees_proof.txt"
+        prepared_gene_trees_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/prepared/prepared_gene_trees_proof.txt")
     params:
-        start_index = START_INDEX,
-        end_index = END_INDEX,
-        time = "00:10:00", cpus = "1", mem="1G", name = "prepare_gene_tree_for_reconciliation"
+        start_index=START_INDEX,
+        end_index=END_INDEX,
+        time="00:10:00",
+        cpus="1",
+        mem="1G",
+        name="prepare_gene_tree_for_reconciliation",
     run:
-        # Define the paths
-        output_prepared_folder = os.path.join(OUTPUT_FOLDER, f"species_tree_{wildcards.sp_tree_index}", "prepared")
-
-
-
-        # Create the output directory if it doesn't exist
-        os.makedirs(output_prepared_folder, exist_ok=True)
-
-        # Change to the prepared directory
-        os.chdir(output_prepared_folder)
-        for gene_index in range(params.start_index, params.end_index):
-            input_sampled_gene_tree = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/sampled/sampled_trees/sampled_gene_{gene_index}.nwk"
-            output_prepared_gene_tree = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/prepared/prepared_gene_{gene_index}.nwk"
-            # Run ALEobserve command
-            cmd = f"ALEobserve {input_sampled_gene_tree}"
-            subprocess.run(cmd, shell=True, check=True)
-
-            # Move .ale file to the desired location
-            ale_file = f"{input_sampled_gene_tree}.ale"
-            shutil.move(ale_file, output_prepared_gene_tree)
-
-        with open(OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/prepared/prepared_gene_trees_proof.txt", "w+") as f:
-            f.write("done!")
-        # Change directory back to OUTPUT_FOLDER
-        os.chdir(OUTPUT_FOLDER)
-
-
-
+        from scripts.prepare_gene_tree_for_reconciliation import prepare_gene_tree_for_reconciliation
+        prepare_gene_tree_for_reconciliation(
+            sampled_gene_trees_dir=os.path.dirname(input.sampled_gene_trees_proof),
+            prepared_gene_trees_dir=os.path.dirname(output.prepared_gene_trees_proof),
+            start_index=params['start_index'],
+            end_index=params['end_index'],
+            prepared_gene_trees_proof=output.prepared_gene_trees_proof,
+        )
 
 rule reconcile_gene_tree:
-    """
-    Reconciles 10% of the prepared sampled gene trees output by the rule
-    prepare_gene_tree_for_reconciliation with the prepared
-    sampled species tree output by the rule 
-    prepare_species_tree_for_reconciliation
-    using the ALEml_undated command.
-
-    Thanks to these reconciliations, we will be able to estimate the
-    parameters of the DTL model with ALE, and run fixed-rate reconciliations
-    for all the gene trees.
-    """
+    """Reconcile 10% of the prepared sampled gene trees to estimate rates."""
     input:
-        prepared_gene_tree_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/prepared_gene_trees_proof.txt",
-        prepared_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk",
-    params:
-        start_index = START_INDEX,
-        end_index_estimation = END_INDEX_ESTIMATION,
-        time = "02:00:00", cpus = "1", mem="1G", name = "reconcile_gene_tree"
+        prepared_gene_tree_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/prepared/prepared_gene_trees_proof.txt"),
+        prepared_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk"),
     output:
-        proof_reconciliation_estimation = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations_estimation/done",
+        proof_reconciliation_estimation=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations_estimation/done"),
+    params:
+        lambda wildcards: get_params_reconcile_gene_tree(
+            wildcards,
+            species_tree_params,
+            OUTPUT_FOLDER,
+            START_INDEX,
+            END_INDEX_ESTIMATION,
+        )
     run:
-        import os
-        import shutil
-        reconciliations_estimation_folder = os.path.join(OUTPUT_FOLDER, f"species_tree_{wildcards.sp_tree_index}/reconciliations_estimation/")
-        prepared_species_tree = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/prepared/ale_sampled_species_tree.nwk"
-
-        os.makedirs(reconciliations_estimation_folder, exist_ok = True)
-        os.chdir(reconciliations_estimation_folder)
-        for gene_index in range(params.start_index, params.end_index_estimation):
-            prepared_gene_tree = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/prepared/prepared_gene_{gene_index}.nwk"
-            cmd = f"ALEml_undated {prepared_species_tree} {prepared_gene_tree}"
-            subprocess.run(cmd, shell=True)
-            source_file_uml = os.path.join(reconciliations_estimation_folder, f"ale_sampled_species_tree.nwk_prepared_gene_{gene_index}.nwk.uml_rec")
-            source_file_uTs = os.path.join(reconciliations_estimation_folder, f"ale_sampled_species_tree.nwk_prepared_gene_{gene_index}.nwk.uTs")
-            target_file_uml = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/reconciliations_estimation/reconciliation_{gene_index}_uml"
-            target_file_uTs = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/reconciliations_estimation/reconciliation_{gene_index}_uTs" 
-            shutil.move(source_file_uml, target_file_uml)
-            shutil.move(source_file_uTs, target_file_uTs)
-        with open(output.proof_reconciliation_estimation, "w+") as f:
-            f.write("done!")
-
-
-
-
-
-
+        from scripts.reconcile_gene_tree import reconcile_gene_tree
+        params = params[0]
+        reconcile_gene_tree(
+            prepared_species_tree=input.prepared_species_tree,
+            prepared_gene_trees_dir=os.path.dirname(input.prepared_gene_tree_proof),
+            start_index=params['start_index'],
+            end_index_estimation=params['end_index_estimation'],
+            reconciliations_estimation_dir=os.path.dirname(output.proof_reconciliation_estimation),
+            proof_reconciliation_estimation=output.proof_reconciliation_estimation,
+        )
 
 rule extract_rates:
-    """
-    Extracts the rates of duplications, transfers and losses from the
-    reconciliations output by the rule reconcile_gene_tree.
-    """
+    """Extract rates of duplications, transfers, and losses."""
     input:
-        proof_reconciliations_estimation = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations_estimation/done",
+        proof_reconciliations_estimation=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations_estimation/done"),
     output:
-        rates = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/rates.txt"
+        rates=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/rates.txt")
     params:
-        time = "00:10:00", cpus = "1", mem="1G", name = "extract_rates"
+        lambda wildcards: get_params_extract_rates(
+            wildcards,
+            OUTPUT_FOLDER,
+            START_INDEX,
+            END_INDEX_ESTIMATION,
+        )
     run:
-        import os
-
-        duplications_total = 0
-        transfers_total = 0
-        losses_total = 0
-        for gene_index in range(START_INDEX, END_INDEX_ESTIMATION):
-            file_path = os.path.join(OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/reconciliations_estimation/", f"reconciliation_{gene_index}_uml")
-            with open(file_path, 'r') as file:
-                lines = file.readlines()
-                for i, line in enumerate(lines):
-                    if line.startswith('rate of'):
-                        values = lines[i + 1].split()  # Read values from the next line
-                        duplications_total += float(values[1])
-                        transfers_total += float(values[2])
-                        losses_total += float(values[3])
-                        break
-
-        duplications = duplications_total / (END_INDEX_ESTIMATION - START_INDEX)
-        transfers = transfers_total / (END_INDEX_ESTIMATION - START_INDEX)
-        losses = losses_total / (END_INDEX_ESTIMATION - START_INDEX)
-
-        with open(output.rates, 'w') as file:
-            file.write(f"{duplications} {transfers} {losses}")
-
-
-
-
+        from scripts.extract_rates import extract_rates
+        params = params[0]
+        extract_rates(
+            reconciliations_estimation_dir=os.path.dirname(input.proof_reconciliations_estimation),
+            start_index=params['start_index'],
+            end_index_estimation=params['end_index_estimation'],
+            rates_file=output.rates,
+        )
 
 rule reconcile_all_gene_trees:
-    """
-    Reconciles all the prepared sampled gene trees output by the rule
-    prepare_gene_tree_for_reconciliation with the prepared
-    sampled species tree output by the rule
-    prepare_species_tree_for_reconciliation
-    using the ALEml_undated command.
-
-    Here we need the estimated DTL parameters obtained from the rule
-    extract_rates because we do fixed-rate reconciliations.
-    """
+    """Reconcile all prepared sampled gene trees using estimated rates."""
     input:
-        prepared_species_tree = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk",
-        prepared_gene_tree_proof = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/prepared/prepared_gene_trees_proof.txt",
-        rates = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/rates.txt",
-    params:
-        start_index = START_INDEX,
-        end_index = END_INDEX,
-        time = "02:00:00", cpus = "1", mem="1G", name = "reconcile_all_gene_trees"
+        prepared_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk"),
+        prepared_gene_tree_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/prepared/prepared_gene_trees_proof.txt"),
+        rates=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/rates.txt"),
     output:
-        proof_reconciliation = OUTPUT_FOLDER + "species_tree_{sp_tree_index}/reconciliations/done",
+        proof_reconciliation=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations/done"),
+    params:
+        lambda wildcards: get_params_reconcile_all_gene_trees(
+            wildcards,
+            OUTPUT_FOLDER,
+            START_INDEX,
+            END_INDEX,
+        )
     run:
-        import os
-        import shutil
-        reconciliations_folder = os.path.join(OUTPUT_FOLDER, f"species_tree_{wildcards.sp_tree_index}/reconciliations/")
-        prepared_species_tree = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/prepared/ale_sampled_species_tree.nwk"
+        from scripts.reconcile_all_gene_trees import reconcile_all_gene_trees
+        params = params[0]
 
-        os.makedirs(reconciliations_folder, exist_ok = True)
-        os.chdir(reconciliations_folder)
-        with open(input.rates, 'r') as rates_file:
-            rates = rates_file.read().strip()
-        duplications, transfers, losses = rates.split()
-        for gene_index in range(params.start_index, params.end_index):
-            prepared_gene_tree = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/prepared/prepared_gene_{gene_index}.nwk"
-            cmd = f"ALEml_undated {prepared_species_tree} {prepared_gene_tree} delta={duplications} tau={transfers} lambda={losses}"
-            subprocess.run(cmd, shell=True)
-            source_file_uml = os.path.join(reconciliations_folder, f"ale_sampled_species_tree.nwk_prepared_gene_{gene_index}.nwk.uml_rec")
-            source_file_uTs = os.path.join(reconciliations_folder, f"ale_sampled_species_tree.nwk_prepared_gene_{gene_index}.nwk.uTs")
-            target_file_uml = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/reconciliations/reconciliation_{gene_index}_uml"
-            target_file_uTs = OUTPUT_FOLDER + f"species_tree_{wildcards.sp_tree_index}/reconciliations/reconciliation_{gene_index}_uTs" 
-            shutil.move(source_file_uml, target_file_uml)
-            shutil.move(source_file_uTs, target_file_uTs)
-        with open(output.proof_reconciliation, "w+") as f:
-            f.write("done!")
+        reconcile_all_gene_trees(
+            prepared_species_tree=input.prepared_species_tree,
+            prepared_gene_trees_dir=os.path.dirname(input.prepared_gene_tree_proof),
+            rates_file=input.rates,
+            start_index=params['start_index'],
+            end_index=params['end_index'],
+            reconciliations_dir=os.path.dirname(output.proof_reconciliation),
+            proof_reconciliation=output.proof_reconciliation,
+        )
