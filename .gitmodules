@@ -1,12 +1,12 @@
 [submodule "sample_script"]
-	path = sample_script
+	path = rust_projects/sample_script
 	url = https://github.com/SisyphusMountain/sample_script
 [submodule "gene_transfer_script"]
-	path = gene_transfer_script
+	path = rust_projects/gene_transfer_script
 	url = https://github.com/SisyphusMountain/gene_transfer_script
 [submodule "extract_extant_script"]
-	path = extract_extant_script
+	path = rust_projects/extract_extant_script
 	url = https://github.com/SisyphusMountain/extract_extant_script
 [submodule "newick_parser"]
-	path = newick_parser
+	path = rust_projects/newick_parser
 	url = https://github.com/SisyphusMountain/newick_parser
