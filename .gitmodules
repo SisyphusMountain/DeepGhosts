@@ -10,3 +10,15 @@
 [submodule "newick_parser"]
 	path = rust_projects/newick_parser
 	url = https://github.com/SisyphusMountain/newick_parser
+[submodule "rust_projects/extract_extant_script"]
+	path = rust_projects/extract_extant_script
+	url = https://github.com/SisyphusMountain/extract_extant_script
+[submodule "rust_projects/gene_transfer_script"]
+	path = rust_projects/gene_transfer_script
+	url = https://github.com/SisyphusMountain/gene_transfer_script
+[submodule "rust_projects/newick_parser"]
+	path = rust_projects/newick_parser
+	url = https://github.com/SisyphusMountain/newick_parser
+[submodule "rust_projects/sample_script"]
+	path = rust_projects/sample_script
+	url = https://github.com/SisyphusMountain/sample_script
