@@ -3,7 +3,7 @@ The following flowchart describes the rules in the snakefile which lead to the
 ```mermaid
 graph TD;
     generate_species_tree["<b>Generate</b> species trees
-    Using birth-death process with parameters <font color='red'><b>&beta;</b></font>, <font color='red'><b>&delta;</b></font>"]-->create_transfers_file["<b>Sample</b> the number of transfers on each gene tree.
+    Using birth-death process with parameters <font color='red'><b>&beta;</b></font>, <font color='red'><b>&delta;</b></font>", until there are <font color='red'><b>N;</b></font> extant species]-->create_transfers_file["<b>Sample</b> the number of transfers on each gene tree.
     Using a Poisson distribution with parameter <font color='red'><b>&tau;</b></font>L where L is the tree length."];
     create_transfers_file-->generate_gene_tree["<b>Generate the gene trees</b> by placing transfers uniformly along the branches of the gene trees. (Choose donor uniformly, then choose recipient uniformly among contemporaneous species)"];
     generate_gene_tree-->sampling_trees["<b>Sample</b> a proportion of the extant leaves of the trees"];
