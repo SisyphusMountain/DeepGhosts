@@ -4,7 +4,7 @@
 /resources/gene_transfer_script
 /resources/sample_script
 /resource/extract_extant_script
-bin/__pycache/
+bin/__pycache__/
 bin/.snakemake/
 species_tree_9/
-
+__pycache__/
