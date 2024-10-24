@@ -1,0 +1,32 @@
+#ALEml_undated using ALE v1.0 by Szollosi GJ et al.; ssolo@elte.hu; CC BY-SA 3.0;
+
+S:	((t26:1.81365,(t11:0.19153,t30:0.19153)9:1.62212)12:0.67265,((((t23:0.03865,t8:0.03865)11:0.30405,t36:0.3427)13:0.90983,(t21:1.20027,t16:1.20031)10:0.052259)14:0.40176,t33:1.6543)15:0.83201)16;
+
+
+Input ale from:	sampled_species_tree.nwk_sampled_species_tree.nwk.ale
+>logl: -2.83321
+rate of	 Duplications	Transfers	Losses
+ML 	0	1e-19	0
+0 reconciled G-s:
+
+# of	 Duplications	Transfers	Losses	Speciations
+Total 	-nan	-nan	-nan	-nan
+
+# of	 Duplications	Transfers	Losses	Originations	copies	singletons	extinction_prob	presence	LL
+S_terminal_branch	t11(0)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_terminal_branch	t16(1)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_terminal_branch	t21(2)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_terminal_branch	t23(3)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_terminal_branch	t26(4)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_terminal_branch	t30(5)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_terminal_branch	t33(6)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_terminal_branch	t36(7)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_terminal_branch	t8(8)	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11358
+S_internal_branch	9	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11357.3
+S_internal_branch	10	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11357.3
+S_internal_branch	11	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11357.3
+S_internal_branch	12	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11357.3
+S_internal_branch	13	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11357.3
+S_internal_branch	14	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11357.3
+S_internal_branch	15	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-11357.3
+S_internal_branch	16	-nan	-nan	-nan	-nan	-nan	-nan	0	-nan	-2.83321

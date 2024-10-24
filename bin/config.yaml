@@ -1,6 +1,6 @@
 # Paths
 parent_path: ..
-bin_path: ../bin/
+bin_path: ./binaries/
 output_folder: ../Output/test/
 
 # Constants and parameters

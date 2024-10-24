@@ -1,6 +1,7 @@
 from pathlib import Path
 import subprocess
 import shutil
+import os
 
 def prepare_gene_tree_for_reconciliation(
     sampled_gene_trees_dir,
@@ -17,8 +18,10 @@ def prepare_gene_tree_for_reconciliation(
     # Create the output directory if it doesn't exist
     prepared_gene_trees_dir.mkdir(parents=True, exist_ok=True)
 
+    
     # Change working directory
-    Path(prepared_gene_trees_dir).cwd()
+    original_dir = os.getcwd()
+    os.chdir(sampled_gene_trees_dir)
 
     for gene_index in range(start_index, end_index):
         # Construct the paths using pathlib
@@ -27,12 +30,16 @@ def prepare_gene_tree_for_reconciliation(
 
         # Run ALEobserve on the sampled gene tree
         cmd = f"ALEobserve {input_sampled_gene_tree}"
-        subprocess.run(cmd, shell=True, check=True)
+        subprocess.run(cmd,
+                       shell=True,
+                       check=True,
+                       stdout=subprocess.DEVNULL,
+                       stderr=subprocess.PIPE,)
 
         # Move the resulting .ale file to the prepared_gene_trees_dir
-        ale_file = input_sampled_gene_tree.with_suffix('.nwk.ale')
+        ale_file = f"sampled_gene_{gene_index}.nwk.ale"
         shutil.move(ale_file, output_prepared_gene_tree)
-
+    os.chdir(original_dir)
     # Write proof that the preparation is complete
     with open(prepared_gene_trees_proof, "w+") as f:
         f.write("done!")

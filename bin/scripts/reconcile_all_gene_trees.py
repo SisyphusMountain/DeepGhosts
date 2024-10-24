@@ -1,6 +1,8 @@
 from pathlib import Path
 import subprocess
 import shutil
+import os
+
 
 def reconcile_all_gene_trees(
     prepared_species_tree,
@@ -22,7 +24,9 @@ def reconcile_all_gene_trees(
     reconciliations_dir.mkdir(parents=True, exist_ok=True)
 
     # Change to the reconciliations directory
-    reconciliations_dir.cwd()
+    original_dir = os.getcwd()
+    os.chdir(reconciliations_dir)
+
 
     # Read the rates file
     with rates_file.open('r') as rates_file_handle:
@@ -32,18 +36,23 @@ def reconcile_all_gene_trees(
     for gene_index in range(start_index, end_index):
         # Construct paths using pathlib
         prepared_gene_tree = prepared_gene_trees_dir / f"prepared_gene_{gene_index}.nwk"
-        cmd = f"ALEml_undated {prepared_species_tree} {prepared_gene_tree} delta={duplications} tau={transfers} lambda={losses}"
-        subprocess.run(cmd, shell=True)
+        cmd = f"ALEml_undated {prepared_species_tree} {prepared_gene_tree} delta={duplications} tau={transfers} lambda={losses} seed=42"
+        subprocess.run(cmd,
+                       shell=True,
+                       check=True,
+                       stdout=subprocess.DEVNULL,
+                       stderr=subprocess.PIPE,)
 
         # Move the resulting .uml_rec and .uTs files
         source_file_uml = f"{prepared_species_tree.name}_{prepared_gene_tree.name}.uml_rec"
         source_file_uTs = f"{prepared_species_tree.name}_{prepared_gene_tree.name}.uTs"
-        target_file_uml = reconciliations_dir / f"reconciliation_{gene_index}_uml"
-        target_file_uTs = reconciliations_dir / f"reconciliation_{gene_index}_uTs"
+        target_file_uml = f"reconciliation_{gene_index}_uml"
+        target_file_uTs = f"reconciliation_{gene_index}_uTs"
 
         shutil.move(source_file_uml, target_file_uml)
         shutil.move(source_file_uTs, target_file_uTs)
-
+    
+    os.chdir(original_dir)
     # Write proof that the reconciliation is complete
     with proof_reconciliation.open("w+") as f:
         f.write("done!")

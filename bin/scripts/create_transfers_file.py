@@ -1,6 +1,6 @@
 # scripts/create_transfers_file.py
 
-from utils import generate_transfers_file
+from scripts.utils import generate_transfers_file
 import os
 import numpy as np
 def create_transfers_file(

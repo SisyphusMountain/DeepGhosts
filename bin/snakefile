@@ -1,11 +1,9 @@
 #! /usr/bin/env python
 from IPython import embed # debug import
 import os
-import numpy as np
-import numpy.random as npr
 from pathlib import Path
-from utils import generate_seed_from_parameters
-from params import (
+from scripts.utils import generate_seed_from_parameters
+from scripts.params import (
     generate_species_tree_params,
     get_params_generate_species_tree,
     get_params_create_transfers_file,
@@ -15,14 +13,7 @@ from params import (
     get_params_extract_rates,
     get_params_reconcile_all_gene_trees,
 )
-
-configfile: '../config/config.yaml'
-
-"""
-## Construction Choices:
-- Functions are called within `run` blocks, passing only the necessary variables.
-- This approach improves modularity and allows functions to be tested independently of Snakemake.
-"""
+configfile: 'config.yaml'
 
 PARENT_PATH = Path(config['parent_path']).resolve()
 BIN_PATH = Path(config['bin_path']).resolve()
@@ -48,7 +39,7 @@ END_INDEX_ESTIMATION = int(N_GENES * PARAMETERS_ESTIMATION_GENE_PROPORTION)
 END_INDEX = N_GENES
 
 # Generate species tree parameters
-species_tree_params = generate_species_tree_params(N_SP_TREES, N_GENES, SEED, config)
+species_tree_params = generate_species_tree_params(N_SP_TREES, SEED, config)
 
 rule all:
     input:
@@ -68,9 +59,6 @@ rule generate_species_tree:
         lambda wildcards: get_params_generate_species_tree(
             wildcards,
             species_tree_params,
-            OUTPUT_FOLDER,
-            R_SCRIPT,
-            EXTRACT_EXTANT_SPECIES_SCRIPT,
             SEED,
             N_GENES,
         )
@@ -86,8 +74,8 @@ rule generate_species_tree:
             output_folder=OUTPUT_FOLDER,
             output_complete_tree=output.complete_tree,
             seed=params['seed'],
-            r_script=params['r_script'],
-            extract_extant_script=params['extract_extant_script'],
+            r_script=R_SCRIPT,
+            extract_extant_script=EXTRACT_EXTANT_SPECIES_SCRIPT,
             total_branch_length_txt=output.branch_length,
             n_extant_nodes=params['n_extant_nodes'],
         )
@@ -103,7 +91,6 @@ rule create_transfers_file:
         lambda wildcards: get_params_create_transfers_file(
             wildcards,
             species_tree_params,
-            OUTPUT_FOLDER,
             DISTRIBUTION,
             N_GENES,
             SEED,
@@ -132,7 +119,6 @@ rule generate_gene_tree:
             wildcards,
             species_tree_params,
             OUTPUT_FOLDER,
-            GENE_TRANSFER_SCRIPT,
             SEED,
             N_GENES,
         )
@@ -144,7 +130,7 @@ rule generate_gene_tree:
             transfers_file=input.transfers,
             output_complete=params['output_complete'],
             seed=params['seed'],
-            gene_transfer_script=params['gene_transfer_script'],
+            gene_transfer_script=GENE_TRANSFER_SCRIPT,
             generated_gene_trees_proof=output.generated_gene_trees_proof,
         )
 
@@ -161,8 +147,6 @@ rule sampling_trees:
         lambda wildcards: get_params_sampling_trees(
             wildcards,
             species_tree_params,
-            OUTPUT_FOLDER,
-            SAMPLE_SCRIPT,
             START_INDEX,
             END_INDEX,
             SEED,
@@ -239,9 +223,6 @@ rule reconcile_gene_tree:
         proof_reconciliation_estimation=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations_estimation/done"),
     params:
         lambda wildcards: get_params_reconcile_gene_tree(
-            wildcards,
-            species_tree_params,
-            OUTPUT_FOLDER,
             START_INDEX,
             END_INDEX_ESTIMATION,
         )
@@ -265,8 +246,6 @@ rule extract_rates:
         rates=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/rates.txt")
     params:
         lambda wildcards: get_params_extract_rates(
-            wildcards,
-            OUTPUT_FOLDER,
             START_INDEX,
             END_INDEX_ESTIMATION,
         )
@@ -290,15 +269,12 @@ rule reconcile_all_gene_trees:
         proof_reconciliation=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations/done"),
     params:
         lambda wildcards: get_params_reconcile_all_gene_trees(
-            wildcards,
-            OUTPUT_FOLDER,
             START_INDEX,
             END_INDEX,
         )
     run:
         from scripts.reconcile_all_gene_trees import reconcile_all_gene_trees
         params = params[0]
-
         reconcile_all_gene_trees(
             prepared_species_tree=input.prepared_species_tree,
             prepared_gene_trees_dir=os.path.dirname(input.prepared_gene_tree_proof),
