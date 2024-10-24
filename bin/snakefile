@@ -2,8 +2,8 @@
 from IPython import embed # debug import
 import os
 from pathlib import Path
-from utils import generate_seed_from_parameters
-from params import (
+from scripts.utils import generate_seed_from_parameters
+from scripts.params import (
     generate_species_tree_params,
     get_params_generate_species_tree,
     get_params_create_transfers_file,
@@ -13,14 +13,7 @@ from params import (
     get_params_extract_rates,
     get_params_reconcile_all_gene_trees,
 )
-
 configfile: 'config.yaml'
-
-"""
-## Construction Choices:
-- Functions are called within `run` blocks, passing only the necessary variables.
-- This approach improves modularity and allows functions to be tested independently of Snakemake.
-"""
 
 PARENT_PATH = Path(config['parent_path']).resolve()
 BIN_PATH = Path(config['bin_path']).resolve()
@@ -296,7 +289,6 @@ rule reconcile_all_gene_trees:
     run:
         from scripts.reconcile_all_gene_trees import reconcile_all_gene_trees
         params = params[0]
-
         reconcile_all_gene_trees(
             prepared_species_tree=input.prepared_species_tree,
             prepared_gene_trees_dir=os.path.dirname(input.prepared_gene_tree_proof),

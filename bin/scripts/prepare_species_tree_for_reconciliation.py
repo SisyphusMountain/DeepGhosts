@@ -1,7 +1,7 @@
 from pathlib import Path
 import subprocess
 import shutil
-
+import os
 def prepare_species_tree_for_reconciliation(
     sampled_species_tree,
     sampled_species_tree_ale,
@@ -12,10 +12,10 @@ def prepare_species_tree_for_reconciliation(
 
     prepared_folder = sampled_species_tree_ale.parent
     prepared_folder.mkdir(parents=True, exist_ok=True)  # Create the directory if it doesn't exist
-
+    original_dir = os.getcwd()
     # Change to the prepared folder directory
-    prepared_folder.cwd()
-
+    os.chdir(prepared_folder)
+    
     # Run ALEobserve on the species tree
     subprocess.run(f"ALEobserve {sampled_species_tree}",
                    shell=True,
@@ -26,7 +26,7 @@ def prepare_species_tree_for_reconciliation(
     # Run ALEml_undated on the species tree
     subprocess.run(
         f"ALEml_undated {sampled_species_tree} {sampled_species_tree}.ale "
-        "output_species_tree=y sample=0 delta=0 tau=0 lambda=0",
+        "output_species_tree=y sample=0 delta=0 tau=0 lambda=0 seed=42",
         shell=True,
         check=True,
         stdout=subprocess.DEVNULL,
@@ -35,7 +35,5 @@ def prepare_species_tree_for_reconciliation(
 
     # Move the ale.spTree file to the desired location
     ale_sp_tree_file = f"{sampled_species_tree.name}_{sampled_species_tree.name}.ale.spTree"
-    try:
-        shutil.move(ale_sp_tree_file, sampled_species_tree_ale)
-    except FileNotFoundError:
-        print(f"ALE spTree file not found at {prepared_folder/ale_sp_tree_file}")
+    shutil.move(ale_sp_tree_file, sampled_species_tree_ale)
+    os.chdir(original_dir)

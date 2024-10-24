@@ -1,10 +1,10 @@
 # Paths
 parent_path: ..
-bin_path: ../bin/
+bin_path: ./binaries/
 output_folder: ../Output/test/
 
 # Constants and parameters
-n_sp_trees: 100
+n_sp_trees: 10
 n_genes: 10
 start_index: 0
 seed: 14

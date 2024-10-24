@@ -2,7 +2,7 @@
 
 import numpy as np
 import numpy.random as npr
-from utils import generate_seed_from_parameters
+from scripts.utils import generate_seed_from_parameters
 import os
 
 def generate_species_tree_params(N_SP_TREES, N_GENES, SEED, config):
