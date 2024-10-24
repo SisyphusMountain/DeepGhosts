@@ -5,7 +5,7 @@ import numpy.random as npr
 from scripts.utils import generate_seed_from_parameters
 import os
 
-def generate_species_tree_params(N_SP_TREES, N_GENES, SEED, config):
+def generate_species_tree_params(N_SP_TREES, SEED, config):
     species_tree_params = {}
     for sp_tree_index in range(N_SP_TREES):
         npr.seed(SEED + sp_tree_index)
@@ -36,9 +36,6 @@ def generate_species_tree_params(N_SP_TREES, N_GENES, SEED, config):
 def get_params_generate_species_tree(
     wildcards,
     species_tree_params,
-    OUTPUT_FOLDER,
-    R_SCRIPT,
-    EXTRACT_EXTANT_SPECIES_SCRIPT,
     SEED,
     N_GENES
 ):
@@ -54,8 +51,6 @@ def get_params_generate_species_tree(
     )
     return {
         'seed': seed,
-        'r_script': R_SCRIPT,
-        'extract_extant_script': EXTRACT_EXTANT_SPECIES_SCRIPT,
         'extant_species': species_tree_params[sp_tree_index]['extant_species'],
         'birth_rate': species_tree_params[sp_tree_index]['birth_rate'],
         'death_rate': species_tree_params[sp_tree_index]['death_rate'],
@@ -63,7 +58,7 @@ def get_params_generate_species_tree(
     }
 
 def get_params_create_transfers_file(
-    wildcards, species_tree_params, OUTPUT_FOLDER, DISTRIBUTION, N_GENES, SEED
+    wildcards, species_tree_params, DISTRIBUTION, N_GENES, SEED
 ):
     sp_tree_index = int(wildcards.sp_tree_index)
     seed = generate_seed_from_parameters(
@@ -82,7 +77,7 @@ def get_params_create_transfers_file(
     }
 
 def get_params_generate_gene_tree(
-    wildcards, species_tree_params, OUTPUT_FOLDER, GENE_TRANSFER_SCRIPT, SEED, N_GENES,
+    wildcards, species_tree_params, OUTPUT_FOLDER, SEED, N_GENES,
 ):
     sp_tree_index = int(wildcards.sp_tree_index)
     seed = generate_seed_from_parameters(
@@ -98,11 +93,10 @@ def get_params_generate_gene_tree(
         'output_complete': os.path.join(
             OUTPUT_FOLDER, f"species_tree_{sp_tree_index}/complete/"
         ),
-        'gene_transfer_script': GENE_TRANSFER_SCRIPT,
     }
 
 def get_params_sampling_trees(
-    wildcards, species_tree_params, OUTPUT_FOLDER, SAMPLE_SCRIPT, START_INDEX, END_INDEX, SEED, N_GENES
+    wildcards, species_tree_params, START_INDEX, END_INDEX, SEED, N_GENES
 ):
     sp_tree_index = int(wildcards.sp_tree_index)
     seed = generate_seed_from_parameters(
@@ -114,7 +108,6 @@ def get_params_sampling_trees(
         SEED,
     )
     return {
-        'sample_script': SAMPLE_SCRIPT,
         'seed': seed,
         'n_sampled_nodes': species_tree_params[sp_tree_index]['sampled_species'],
         'start_index': START_INDEX,
@@ -122,7 +115,7 @@ def get_params_sampling_trees(
     }
 
 def get_params_reconcile_gene_tree(
-    wildcards, species_tree_params, OUTPUT_FOLDER, START_INDEX, END_INDEX_ESTIMATION
+        START_INDEX, END_INDEX_ESTIMATION
 ):
     return {
         'start_index': START_INDEX,
@@ -130,7 +123,7 @@ def get_params_reconcile_gene_tree(
     }
 
 def get_params_extract_rates(
-    wildcards, OUTPUT_FOLDER, START_INDEX, END_INDEX_ESTIMATION
+    START_INDEX, END_INDEX_ESTIMATION
 ):
     return {
         'start_index': START_INDEX,
@@ -138,7 +131,7 @@ def get_params_extract_rates(
     }
 
 def get_params_reconcile_all_gene_trees(
-    wildcards, OUTPUT_FOLDER, START_INDEX, END_INDEX
+    START_INDEX, END_INDEX
 ):
     return {
         'start_index': START_INDEX,

@@ -1,5 +1,5 @@
 import subprocess
-
+from scripts.rename import rename_internal_nodes
 def generate_species_tree(
     extant_species,
     birth_rate,
@@ -29,7 +29,7 @@ def generate_species_tree(
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     print("STDOUT:", result.stdout)
     print("STDERR:", result.stderr)
-
+    rename_internal_nodes(output_complete_tree, output_complete_tree)
     # Extract the sum of branch lengths
     sum_branch_lengths = result.stdout.strip().split('\n')[-1]
 
