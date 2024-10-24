@@ -27,7 +27,11 @@ def prepare_gene_tree_for_reconciliation(
 
         # Run ALEobserve on the sampled gene tree
         cmd = f"ALEobserve {input_sampled_gene_tree}"
-        subprocess.run(cmd, shell=True, check=True)
+        subprocess.run(cmd,
+                       shell=True,
+                       check=True,
+                       stdout=subprocess.DEVNULL,
+                       stderr=subprocess.PIPE,)
 
         # Move the resulting .ale file to the prepared_gene_trees_dir
         ale_file = input_sampled_gene_tree.with_suffix('.nwk.ale')

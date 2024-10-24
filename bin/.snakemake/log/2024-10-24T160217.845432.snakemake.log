@@ -1,0 +1,27 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                         count    min threads    max threads
+------------------------  -------  -------------  -------------
+all                             1              1              1
+extract_rates                   1              1              1
+reconcile_all_gene_trees        1              1              1
+reconcile_gene_tree             1              1              1
+total                           4              1              1
+
+Select jobs to execute...
+
+[Thu Oct 24 16:02:18 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_2/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_2/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_2/reconciliations_estimation/done
+    jobid: 27
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_2/reconciliations_estimation/done
+    wildcards: sp_tree_index=2
+    resources: tmpdir=/tmp
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-10-24T160217.845432.snakemake.log

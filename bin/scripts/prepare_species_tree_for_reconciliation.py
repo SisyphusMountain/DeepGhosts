@@ -17,7 +17,11 @@ def prepare_species_tree_for_reconciliation(
     prepared_folder.cwd()
 
     # Run ALEobserve on the species tree
-    subprocess.run(f"ALEobserve {sampled_species_tree}", shell=True, check=True)
+    subprocess.run(f"ALEobserve {sampled_species_tree}",
+                   shell=True,
+                   check=True,
+                   stdout=subprocess.DEVNULL,
+                   stderr=subprocess.PIPE,)
     
     # Run ALEml_undated on the species tree
     subprocess.run(
@@ -25,8 +29,13 @@ def prepare_species_tree_for_reconciliation(
         "output_species_tree=y sample=0 delta=0 tau=0 lambda=0",
         shell=True,
         check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
     )
 
     # Move the ale.spTree file to the desired location
     ale_sp_tree_file = f"{sampled_species_tree.name}_{sampled_species_tree.name}.ale.spTree"
-    shutil.move(ale_sp_tree_file, sampled_species_tree_ale)
+    try:
+        shutil.move(ale_sp_tree_file, sampled_species_tree_ale)
+    except FileNotFoundError:
+        print(f"ALE spTree file not found at {prepared_folder/ale_sp_tree_file}")

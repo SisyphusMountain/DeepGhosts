@@ -1,0 +1,8 @@
+Building DAG of jobs...
+InputFunctionException in rule generate_gene_tree in file /home/enzo/Documents/git/WP1/DeepGhosts/bin/snakefile, line 117:
+Error:
+  TypeError: get_params_generate_gene_tree() missing 1 required positional argument: 'N_GENES'
+Wildcards:
+  sp_tree_index=0
+Traceback:
+  File "/home/enzo/Documents/git/WP1/DeepGhosts/bin/snakefile", line 125, in <lambda>

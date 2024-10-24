@@ -1,0 +1,8 @@
+Building DAG of jobs...
+InputFunctionException in rule sampling_trees in file /home/enzo/Documents/git/WP1/DeepGhosts/bin/snakefile, line 144:
+Error:
+  TypeError: get_params_sampling_trees() missing 1 required positional argument: 'N_GENES'
+Wildcards:
+  sp_tree_index=0
+Traceback:
+  File "/home/enzo/Documents/git/WP1/DeepGhosts/bin/snakefile", line 154, in <lambda>

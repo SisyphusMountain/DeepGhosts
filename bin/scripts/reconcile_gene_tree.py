@@ -30,8 +30,12 @@ def reconcile_gene_tree(
         prepared_gene_tree = prepared_gene_trees_dir / f"prepared_gene_{gene_index}.nwk"
 
         # Run ALEml_undated on the species tree and gene tree
-        cmd = f"ALEml_undated {prepared_species_tree} {prepared_gene_tree}"
-        subprocess.run(cmd, shell=True, check=True)
+        cmd = f"ALEml_undated {prepared_species_tree} {prepared_gene_tree} seed=42"
+        subprocess.run(cmd,
+                       shell=True,
+                       check=True,
+                       stdout=subprocess.DEVNULL,
+                       stderr=subprocess.PIPE,)
 
         # Construct the source and target file paths
         source_file_uml = f"{prepared_species_tree.stem}.nwk_{prepared_gene_tree.stem}.nwk.uml_rec"

@@ -33,7 +33,11 @@ def reconcile_all_gene_trees(
         # Construct paths using pathlib
         prepared_gene_tree = prepared_gene_trees_dir / f"prepared_gene_{gene_index}.nwk"
         cmd = f"ALEml_undated {prepared_species_tree} {prepared_gene_tree} delta={duplications} tau={transfers} lambda={losses}"
-        subprocess.run(cmd, shell=True)
+        subprocess.run(cmd,
+                       shell=True,
+                       check=True,
+                       stdout=subprocess.DEVNULL,
+                       stderr=subprocess.PIPE,)
 
         # Move the resulting .uml_rec and .uTs files
         source_file_uml = f"{prepared_species_tree.name}_{prepared_gene_tree.name}.uml_rec"

@@ -1,0 +1,2696 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                                        count    min threads    max threads
+---------------------------------------  -------  -------------  -------------
+all                                            1              1              1
+create_transfers_file                          1              1              1
+extract_rates                                 51              1              1
+generate_gene_tree                             5              1              1
+prepare_gene_tree_for_reconciliation          22              1              1
+prepare_species_tree_for_reconciliation       21              1              1
+reconcile_all_gene_trees                      58              1              1
+reconcile_gene_tree                           38              1              1
+sampling_trees                                11              1              1
+total                                        208              1              1
+
+Select jobs to execute...
+
+[Thu Oct 24 16:19:53 2024]
+rule create_transfers_file:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/branch_length.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/transfers_file.txt
+    jobid: 150
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/transfers_file.txt
+    wildcards: sp_tree_index=16
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 210
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=23
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 750
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=83
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/reconciliations_estimation/done
+    jobid: 360
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/reconciliations_estimation/done
+    wildcards: sp_tree_index=39
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/reconciliations_estimation/done
+    jobid: 540
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/reconciliations_estimation/done
+    wildcards: sp_tree_index=59
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/prepared/ale_sampled_species_tree.nwk
+    jobid: 29
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=3
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/rates.txt
+    jobid: 278
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/rates.txt
+    wildcards: sp_tree_index=30
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/rates.txt
+    jobid: 323
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/rates.txt
+    wildcards: sp_tree_index=35
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/prepared/prepared_gene_trees_proof.txt
+    jobid: 637
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=70
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/prepared/prepared_gene_trees_proof.txt
+    jobid: 421
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=46
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 327
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/sampled/sampled_trees/sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=36
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/prepared/prepared_gene_trees_proof.txt
+    jobid: 97
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=10
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule generate_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/transfers_file.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/complete/tree_0/genes/generated_gene_trees_proof.txt
+    jobid: 455
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=50
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/ale_sampled_species_tree.nwk
+    jobid: 785
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=87
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/ale_sampled_species_tree.nwk
+    jobid: 245
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=27
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_98/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_98/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_98/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_98/reconciliations/done
+    jobid: 883
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_98/reconciliations/done
+    wildcards: sp_tree_index=98
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_88/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_88/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_88/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_88/reconciliations/done
+    jobid: 793
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_88/reconciliations/done
+    wildcards: sp_tree_index=88
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/reconciliations_estimation/done
+    jobid: 306
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/reconciliations_estimation/done
+    wildcards: sp_tree_index=33
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/reconciliations_estimation/done
+    jobid: 846
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/reconciliations_estimation/done
+    wildcards: sp_tree_index=93
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule generate_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/transfers_file.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/complete/tree_0/genes/generated_gene_trees_proof.txt
+    jobid: 779
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=86
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/prepared/ale_sampled_species_tree.nwk
+    jobid: 479
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=53
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/ale_sampled_species_tree.nwk
+    jobid: 569
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=63
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/rates.txt
+    jobid: 269
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/rates.txt
+    wildcards: sp_tree_index=29
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/rates.txt
+    jobid: 629
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/rates.txt
+    wildcards: sp_tree_index=69
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/prepared/ale_sampled_species_tree.nwk
+    jobid: 659
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=73
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/rates.txt
+    jobid: 314
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/rates.txt
+    wildcards: sp_tree_index=34
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule generate_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/transfers_file.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/complete/tree_0/genes/generated_gene_trees_proof.txt
+    jobid: 509
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=56
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule generate_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/transfers_file.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/complete/tree_0/genes/generated_gene_trees_proof.txt
+    jobid: 869
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=96
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/prepared/prepared_gene_trees_proof.txt
+    jobid: 772
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=85
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_84/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_84/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_84/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_84/reconciliations/done
+    jobid: 757
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_84/reconciliations/done
+    wildcards: sp_tree_index=84
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/prepared/prepared_gene_trees_proof.txt
+    jobid: 412
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=45
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:53 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_94/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_94/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_94/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_94/reconciliations/done
+    jobid: 847
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_94/reconciliations/done
+    wildcards: sp_tree_index=94
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:55 2024]
+Finished job 97.
+1 of 208 steps (0.5%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:55 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/reconciliations_estimation/done
+    jobid: 90
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/reconciliations_estimation/done
+    wildcards: sp_tree_index=9
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 150.
+2 of 208 steps (1%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/reconciliations_estimation/done
+    jobid: 450
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/reconciliations_estimation/done
+    wildcards: sp_tree_index=49
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 327.
+3 of 208 steps (1%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 390
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=43
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 269.
+4 of 208 steps (2%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/prepared/ale_sampled_species_tree.nwk
+    jobid: 713
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=79
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 314.
+5 of 208 steps (2%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 278.
+6 of 208 steps (3%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/prepared/ale_sampled_species_tree.nwk
+    jobid: 803
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=89
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/prepared_gene_trees_proof.txt
+    jobid: 574
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=63
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 629.
+7 of 208 steps (3%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/prepared/ale_sampled_species_tree.nwk
+    jobid: 173
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=19
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 323.
+8 of 208 steps (4%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 245.
+9 of 208 steps (4%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_25/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_25/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_25/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_25/reconciliations/done
+    jobid: 226
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_25/reconciliations/done
+    wildcards: sp_tree_index=25
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/ale_sampled_species_tree.nwk
+    jobid: 326
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=36
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 637.
+10 of 208 steps (5%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 479.
+11 of 208 steps (5%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 785.
+12 of 208 steps (6%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/prepared/prepared_gene_trees_proof.txt
+    jobid: 691
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=76
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_47/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_47/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_47/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_47/reconciliations/done
+    jobid: 424
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_47/reconciliations/done
+    wildcards: sp_tree_index=47
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/rates.txt
+    jobid: 863
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/rates.txt
+    wildcards: sp_tree_index=95
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 509.
+13 of 208 steps (6%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 540.
+14 of 208 steps (7%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 659.
+15 of 208 steps (7%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 869.
+16 of 208 steps (8%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/prepared_gene_trees_proof.txt
+    jobid: 331
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=36
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/rates.txt
+    jobid: 728
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/rates.txt
+    wildcards: sp_tree_index=80
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_15/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_15/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_15/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_15/reconciliations/done
+    jobid: 136
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_15/reconciliations/done
+    wildcards: sp_tree_index=15
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 507
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/sampled/sampled_trees/sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/sampled/sampled_trees/sampled_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=56
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 569.
+17 of 208 steps (8%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 421.
+18 of 208 steps (9%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 29.
+19 of 208 steps (9%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 455.
+20 of 208 steps (10%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 210.
+21 of 208 steps (10%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 750.
+22 of 208 steps (11%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 779.
+23 of 208 steps (11%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/reconciliations_estimation/done
+    jobid: 36
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=3
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/reconciliations_estimation/done
+    jobid: 486
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=53
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/reconciliations_estimation/done
+    jobid: 666
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=73
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/rates.txt
+    jobid: 8
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/rates.txt
+    wildcards: sp_tree_index=0
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/prepared/ale_sampled_species_tree.nwk
+    jobid: 119
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=13
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/rates.txt
+    jobid: 539
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/reconciliations_estimation/done
+    wildcards: sp_tree_index=59
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/prepared/ale_sampled_species_tree.nwk
+    jobid: 749
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=83
+    resources: tmpdir=/tmp
+
+Select jobs to execute...
+[Thu Oct 24 16:19:56 2024]
+Finished job 360.
+24 of 208 steps (12%) done
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/rates.txt
+    jobid: 818
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/rates.txt
+    wildcards: sp_tree_index=90
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 412.
+25 of 208 steps (12%) done
+[Thu Oct 24 16:19:56 2024]
+Finished job 772.
+26 of 208 steps (12%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/reconciliations_estimation/done
+    jobid: 774
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=85
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/reconciliations_estimation/done
+    jobid: 342
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/reconciliations_estimation/done
+    wildcards: sp_tree_index=37
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 846.
+27 of 208 steps (13%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/rates.txt
+    jobid: 503
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/rates.txt
+    wildcards: sp_tree_index=55
+    resources: tmpdir=/tmp
+
+Select jobs to execute...
+[Thu Oct 24 16:19:56 2024]
+Finished job 883.
+28 of 208 steps (13%) done
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/rates.txt
+    jobid: 368
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/rates.txt
+    wildcards: sp_tree_index=40
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 306.
+29 of 208 steps (14%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/rates.txt
+    jobid: 188
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/rates.txt
+    wildcards: sp_tree_index=20
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:56 2024]
+Finished job 793.
+30 of 208 steps (14%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:56 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/rates.txt
+    jobid: 548
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/rates.txt
+    wildcards: sp_tree_index=60
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:57 2024]
+Finished job 847.
+31 of 208 steps (15%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:57 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/reconciliations/done
+    jobid: 271
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_30/rates.txt
+    wildcards: sp_tree_index=30
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:57 2024]
+Finished job 757.
+32 of 208 steps (15%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:57 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/reconciliations/done
+    jobid: 316
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_35/rates.txt
+    wildcards: sp_tree_index=35
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:58 2024]
+Finished job 390.
+33 of 208 steps (16%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:58 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/prepared/prepared_gene_trees_proof.txt
+    jobid: 241
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=26
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:58 2024]
+Finished job 713.
+34 of 208 steps (16%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:58 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/reconciliations_estimation/done
+    jobid: 720
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=79
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:58 2024]
+Finished job 450.
+35 of 208 steps (17%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:58 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/prepared/prepared_gene_trees_proof.txt
+    jobid: 61
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/prepared/prepared_gene_trees_proof.txt; Params have changed since last execution
+    wildcards: sp_tree_index=6
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:58 2024]
+Finished job 728.
+36 of 208 steps (17%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:58 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/reconciliations/done
+    jobid: 721
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_80/rates.txt
+    wildcards: sp_tree_index=80
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:58 2024]
+Finished job 173.
+37 of 208 steps (18%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:58 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/reconciliations_estimation/done
+    jobid: 180
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=19
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:58 2024]
+Finished job 507.
+38 of 208 steps (18%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/prepared_gene_trees_proof.txt
+    jobid: 511
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=56
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 863.
+39 of 208 steps (19%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/reconciliations/done
+    jobid: 856
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_95/rates.txt
+    wildcards: sp_tree_index=95
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 803.
+40 of 208 steps (19%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/reconciliations_estimation/done
+    jobid: 810
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=89
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 8.
+41 of 208 steps (20%) done
+[Thu Oct 24 16:19:59 2024]
+Finished job 331.
+42 of 208 steps (20%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 453
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/sampled/sampled_trees/sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/sampled/sampled_trees/sampled_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=50
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/rates.txt
+    jobid: 359
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/reconciliations_estimation/done
+    wildcards: sp_tree_index=39
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 691.
+43 of 208 steps (21%) done
+[Thu Oct 24 16:19:59 2024]
+Finished job 539.
+44 of 208 steps (21%) done
+[Thu Oct 24 16:19:59 2024]
+Finished job 749.
+45 of 208 steps (22%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule generate_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/transfers_file.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/complete/tree_0/genes/generated_gene_trees_proof.txt
+    jobid: 149
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/complete/tree_0/genes/generated_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/transfers_file.txt
+    wildcards: sp_tree_index=16
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/reconciliations/done
+    jobid: 262
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_29/rates.txt
+    wildcards: sp_tree_index=29
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/reconciliations_estimation/done
+    jobid: 693
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=76
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 326.
+46 of 208 steps (22%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/reconciliations/done
+    jobid: 1
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_0/rates.txt; Params have changed since last execution
+    wildcards: sp_tree_index=0
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 818.
+47 of 208 steps (23%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/reconciliations/done
+    jobid: 811
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_90/rates.txt
+    wildcards: sp_tree_index=90
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 574.
+48 of 208 steps (23%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/reconciliations_estimation/done
+    jobid: 414
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=45
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 119.
+49 of 208 steps (24%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 894
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/sampled/sampled_trees/sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=99
+    resources: tmpdir=/tmp
+
+Select jobs to execute...
+[Thu Oct 24 16:19:59 2024]
+Finished job 90.
+50 of 208 steps (24%) done
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/reconciliations_estimation/done
+    jobid: 99
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=10
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 486.
+51 of 208 steps (25%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/reconciliations_estimation/done
+    jobid: 639
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=70
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 503.
+52 of 208 steps (25%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/reconciliations/done
+    jobid: 496
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_55/rates.txt
+    wildcards: sp_tree_index=55
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 424.
+53 of 208 steps (25%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/prepared_gene_trees_proof.txt
+    jobid: 790
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=87
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 368.
+54 of 208 steps (26%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/reconciliations/done
+    jobid: 361
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_40/rates.txt
+    wildcards: sp_tree_index=40
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 36.
+55 of 208 steps (26%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/prepared_gene_trees_proof.txt
+    jobid: 250
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=27
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 666.
+56 of 208 steps (27%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/reconciliations_estimation/done
+    jobid: 333
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=36
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 548.
+57 of 208 steps (27%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/reconciliations/done
+    jobid: 541
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_60/rates.txt
+    wildcards: sp_tree_index=60
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 136.
+58 of 208 steps (28%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:19:59 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/reconciliations_estimation/done
+    jobid: 423
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=46
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:19:59 2024]
+Finished job 188.
+59 of 208 steps (28%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:00 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/reconciliations/done
+    jobid: 181
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_20/rates.txt
+    wildcards: sp_tree_index=20
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:00 2024]
+Finished job 226.
+60 of 208 steps (29%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:00 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/ale_sampled_species_tree.nwk
+    jobid: 506
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=56
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:00 2024]
+Finished job 774.
+61 of 208 steps (29%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:00 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/rates.txt
+    jobid: 773
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/reconciliations_estimation/done
+    wildcards: sp_tree_index=85
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:00 2024]
+Finished job 342.
+62 of 208 steps (30%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:00 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/rates.txt
+    jobid: 341
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/reconciliations_estimation/done
+    wildcards: sp_tree_index=37
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:00 2024]
+Finished job 271.
+63 of 208 steps (30%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:00 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/prepared/prepared_gene_trees_proof.txt
+    jobid: 394
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=43
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:01 2024]
+Finished job 241.
+64 of 208 steps (31%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:01 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/reconciliations_estimation/done
+    jobid: 243
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=26
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:01 2024]
+Finished job 316.
+65 of 208 steps (31%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:01 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/prepared/prepared_gene_trees_proof.txt
+    jobid: 754
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=83
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:01 2024]
+Finished job 99.
+66 of 208 steps (32%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:01 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/rates.txt
+    jobid: 98
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/reconciliations_estimation/done
+    wildcards: sp_tree_index=10
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:01 2024]
+Finished job 61.
+67 of 208 steps (32%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:01 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/reconciliations_estimation/done
+    jobid: 63
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=6
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 894.
+68 of 208 steps (33%) done
+[Thu Oct 24 16:20:02 2024]
+Finished job 511.
+69 of 208 steps (33%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/reconciliations/done
+    jobid: 532
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_59/rates.txt
+    wildcards: sp_tree_index=59
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/rates.txt
+    jobid: 485
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/reconciliations_estimation/done
+    wildcards: sp_tree_index=53
+    resources: tmpdir=/tmp
+
+Select jobs to execute...
+[Thu Oct 24 16:20:02 2024]
+Finished job 149.
+70 of 208 steps (34%) done
+
+[Thu Oct 24 16:20:02 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/ale_sampled_species_tree.nwk
+    jobid: 893
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=99
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 453.
+71 of 208 steps (34%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/ale_sampled_species_tree.nwk
+    jobid: 452
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=50
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 359.
+72 of 208 steps (35%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/prepared/prepared_gene_trees_proof.txt
+    jobid: 214
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=23
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 720.
+73 of 208 steps (35%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 597
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/sampled/sampled_trees/sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=66
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 856.
+74 of 208 steps (36%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 777
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/sampled/sampled_trees/sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/sampled/sampled_trees/sampled_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=86
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 180.
+75 of 208 steps (36%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/reconciliations_estimation/done
+    jobid: 702
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/reconciliations_estimation/done
+    wildcards: sp_tree_index=77
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 721.
+76 of 208 steps (37%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 147
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/sampled/sampled_trees/sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/sampled/sampled_trees/sampled_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=16
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 790.
+77 of 208 steps (37%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule sampling_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/complete_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/extant_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/complete/tree_0/genes/generated_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/sampled/sampled_trees/sampled_species_tree.nwk
+    jobid: 867
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/sampled/sampled_trees/sampled_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/sampled/sampled_trees/sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/complete/tree_0/genes/generated_gene_trees_proof.txt
+    wildcards: sp_tree_index=96
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 693.
+78 of 208 steps (38%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/rates.txt
+    jobid: 692
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/reconciliations_estimation/done
+    wildcards: sp_tree_index=76
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 414.
+79 of 208 steps (38%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/rates.txt
+    jobid: 413
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/reconciliations_estimation/done
+    wildcards: sp_tree_index=45
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 639.
+80 of 208 steps (38%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/rates.txt
+    jobid: 638
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/reconciliations_estimation/done
+    wildcards: sp_tree_index=70
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 250.
+81 of 208 steps (39%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/reconciliations_estimation/done
+    jobid: 792
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=87
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 811.
+82 of 208 steps (39%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/reconciliations_estimation/done
+    jobid: 252
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=27
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:02 2024]
+Finished job 506.
+83 of 208 steps (40%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:02 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/reconciliations_estimation/done
+    jobid: 513
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=56
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 262.
+84 of 208 steps (40%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/reconciliations_estimation/done
+    jobid: 585
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/reconciliations_estimation/done
+    wildcards: sp_tree_index=64
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 810.
+85 of 208 steps (41%) done
+[Thu Oct 24 16:20:03 2024]
+Finished job 423.
+86 of 208 steps (41%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/reconciliations/done
+    jobid: 622
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_69/rates.txt
+    wildcards: sp_tree_index=69
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/rates.txt
+    jobid: 179
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/reconciliations_estimation/done
+    wildcards: sp_tree_index=19
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 333.
+87 of 208 steps (42%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/rates.txt
+    jobid: 665
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/reconciliations_estimation/done
+    wildcards: sp_tree_index=73
+    resources: tmpdir=/tmp
+
+Select jobs to execute...
+[Thu Oct 24 16:20:03 2024]
+Finished job 341.
+88 of 208 steps (42%) done
+
+[Thu Oct 24 16:20:03 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/rates.txt
+    jobid: 332
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/reconciliations_estimation/done
+    wildcards: sp_tree_index=36
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 773.
+89 of 208 steps (43%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/reconciliations/done
+    jobid: 334
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_37/rates.txt
+    wildcards: sp_tree_index=37
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 394.
+90 of 208 steps (43%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/rates.txt
+    jobid: 422
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/reconciliations_estimation/done
+    wildcards: sp_tree_index=46
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 541.
+91 of 208 steps (44%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/reconciliations_estimation/done
+    jobid: 576
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=63
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 496.
+92 of 208 steps (44%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/rates.txt
+    jobid: 35
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/reconciliations_estimation/done
+    wildcards: sp_tree_index=3
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 1.
+93 of 208 steps (45%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/prepared_gene_trees_proof.txt
+    jobid: 457
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=50
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:03 2024]
+Finished job 361.
+94 of 208 steps (45%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:03 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/reconciliations/done
+    jobid: 352
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_39/rates.txt
+    wildcards: sp_tree_index=39
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:04 2024]
+Finished job 181.
+95 of 208 steps (46%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:04 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/rates.txt
+    jobid: 305
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/reconciliations_estimation/done
+    wildcards: sp_tree_index=33
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:04 2024]
+Finished job 754.
+96 of 208 steps (46%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:04 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/rates.txt
+    jobid: 845
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/reconciliations_estimation/done
+    wildcards: sp_tree_index=93
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:04 2024]
+Finished job 98.
+97 of 208 steps (47%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:04 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/rates.txt
+    jobid: 809
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/reconciliations_estimation/done
+    wildcards: sp_tree_index=89
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:04 2024]
+Finished job 452.
+98 of 208 steps (47%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:04 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/reconciliations/done
+    jobid: 307
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_34/rates.txt
+    wildcards: sp_tree_index=34
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:04 2024]
+Finished job 243.
+99 of 208 steps (48%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:04 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/rates.txt
+    jobid: 449
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/reconciliations_estimation/done
+    wildcards: sp_tree_index=49
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 485.
+100 of 208 steps (48%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/prepared/ale_sampled_species_tree.nwk
+    jobid: 389
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=43
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 597.
+101 of 208 steps (49%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/prepared_gene_trees_proof.txt
+    jobid: 898
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=99
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 214.
+102 of 208 steps (49%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/prepared/ale_sampled_species_tree.nwk
+    jobid: 596
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=66
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 63.
+103 of 208 steps (50%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/prepared/prepared_gene_trees_proof.txt
+    jobid: 601
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=66
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 532.
+104 of 208 steps (50%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/reconciliations/done
+    jobid: 478
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_53/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=53
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 893.
+105 of 208 steps (50%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/rates.txt
+    jobid: 89
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/reconciliations_estimation/done
+    wildcards: sp_tree_index=9
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 777.
+106 of 208 steps (51%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/prepared/ale_sampled_species_tree.nwk
+    jobid: 776
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=86
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 702.
+107 of 208 steps (51%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/rates.txt
+    jobid: 701
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/reconciliations_estimation/done
+    wildcards: sp_tree_index=77
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 147.
+108 of 208 steps (52%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/prepared/prepared_gene_trees_proof.txt
+    jobid: 781
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=86
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 332.
+109 of 208 steps (52%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:05 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/reconciliations/done
+    jobid: 91
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_10/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=10
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:05 2024]
+Finished job 867.
+110 of 208 steps (53%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/prepared/prepared_gene_trees_proof.txt
+    jobid: 871
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=96
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+Finished job 638.
+111 of 208 steps (53%) done
+[Thu Oct 24 16:20:06 2024]
+Finished job 692.
+112 of 208 steps (54%) done
+[Thu Oct 24 16:20:06 2024]
+Finished job 413.
+113 of 208 steps (54%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/rates.txt
+    jobid: 242
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/reconciliations_estimation/done
+    wildcards: sp_tree_index=26
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+rule prepare_gene_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/prepared/prepared_gene_trees_proof.txt
+    jobid: 151
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/prepared/prepared_gene_trees_proof.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/sampled/sampled_trees/sampled_gene_trees_proof.txt
+    wildcards: sp_tree_index=16
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/prepared/ale_sampled_species_tree.nwk
+    jobid: 146
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=16
+    resources: tmpdir=/tmp
+
+Select jobs to execute...
+[Thu Oct 24 16:20:06 2024]
+Finished job 585.
+114 of 208 steps (55%) done
+
+[Thu Oct 24 16:20:06 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/reconciliations/done
+    jobid: 631
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_70/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=70
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+Finished job 513.
+115 of 208 steps (55%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/reconciliations/done
+    jobid: 766
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_85/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=85
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+Finished job 252.
+116 of 208 steps (56%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/reconciliations/done
+    jobid: 406
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_45/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=45
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+Finished job 792.
+117 of 208 steps (56%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/prepared/ale_sampled_species_tree.nwk
+    jobid: 209
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=23
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+Finished job 179.
+118 of 208 steps (57%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/reconciliations/done
+    jobid: 172
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_19/rates.txt
+    wildcards: sp_tree_index=19
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+Finished job 35.
+119 of 208 steps (57%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/rates.txt
+    jobid: 584
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/reconciliations_estimation/done
+    wildcards: sp_tree_index=64
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+Finished job 422.
+120 of 208 steps (58%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/rates.txt
+    jobid: 719
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/reconciliations_estimation/done
+    wildcards: sp_tree_index=79
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+Finished job 665.
+121 of 208 steps (58%) done
+[Thu Oct 24 16:20:06 2024]
+Finished job 457.
+122 of 208 steps (59%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:06 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/reconciliations/done
+    jobid: 28
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_3/prepared/ale_sampled_species_tree.nwk; Params have changed since last execution
+    wildcards: sp_tree_index=3
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:06 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/rates.txt
+    jobid: 791
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/reconciliations_estimation/done
+    wildcards: sp_tree_index=87
+    resources: tmpdir=/tmp
+
+Select jobs to execute...
+[Thu Oct 24 16:20:06 2024]
+Finished job 622.
+123 of 208 steps (59%) done
+
+[Thu Oct 24 16:20:06 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/reconciliations/done
+    jobid: 658
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_73/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=73
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:07 2024]
+Finished job 576.
+124 of 208 steps (60%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:07 2024]
+rule prepare_species_tree_for_reconciliation:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/sampled/sampled_trees/sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/prepared/ale_sampled_species_tree.nwk
+    jobid: 866
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/prepared/ale_sampled_species_tree.nwk; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/sampled/sampled_trees/sampled_species_tree.nwk
+    wildcards: sp_tree_index=96
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:07 2024]
+Finished job 305.
+125 of 208 steps (60%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:07 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/reconciliations/done
+    jobid: 298
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_33/rates.txt
+    wildcards: sp_tree_index=33
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:07 2024]
+Finished job 809.
+126 of 208 steps (61%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:07 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/reconciliations_estimation/done
+    jobid: 459
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=50
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:07 2024]
+Finished job 845.
+127 of 208 steps (61%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:07 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/reconciliations/done
+    jobid: 838
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_93/rates.txt
+    wildcards: sp_tree_index=93
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:07 2024]
+Finished job 449.
+128 of 208 steps (62%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:07 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/reconciliations/done
+    jobid: 442
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_49/rates.txt
+    wildcards: sp_tree_index=49
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:07 2024]
+Finished job 898.
+129 of 208 steps (62%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:07 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/reconciliations/done
+    jobid: 802
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_89/rates.txt
+    wildcards: sp_tree_index=89
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+Finished job 776.
+130 of 208 steps (62%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:08 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/rates.txt
+    jobid: 251
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/reconciliations_estimation/done
+    wildcards: sp_tree_index=27
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+Finished job 389.
+131 of 208 steps (63%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:08 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/rates.txt
+    jobid: 575
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/reconciliations_estimation/done
+    wildcards: sp_tree_index=63
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+Finished job 89.
+132 of 208 steps (63%) done
+[Thu Oct 24 16:20:08 2024]
+Finished job 601.
+133 of 208 steps (64%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:08 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/reconciliations_estimation/done
+    jobid: 900
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=99
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/rates.txt
+    jobid: 512
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/reconciliations_estimation/done
+    wildcards: sp_tree_index=56
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+Finished job 307.
+134 of 208 steps (64%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:08 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/reconciliations/done
+    jobid: 82
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_9/rates.txt; Params have changed since last execution
+    wildcards: sp_tree_index=9
+    resources: tmpdir=/tmp
+
+Select jobs to execute...
+[Thu Oct 24 16:20:08 2024]
+Finished job 596.
+135 of 208 steps (65%) done
+
+[Thu Oct 24 16:20:08 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/reconciliations_estimation/done
+    jobid: 603
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=66
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+Finished job 352.
+136 of 208 steps (65%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:08 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/reconciliations/done
+    jobid: 685
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_76/rates.txt
+    wildcards: sp_tree_index=76
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+Finished job 701.
+137 of 208 steps (66%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:08 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/reconciliations/done
+    jobid: 325
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_36/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=36
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+Finished job 781.
+138 of 208 steps (66%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:08 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/reconciliations_estimation/done
+    jobid: 783
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=86
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:08 2024]
+Finished job 334.
+139 of 208 steps (67%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:08 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/reconciliations/done
+    jobid: 415
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_46/rates.txt
+    wildcards: sp_tree_index=46
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 242.
+140 of 208 steps (67%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/reconciliations/done
+    jobid: 235
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_26/rates.txt
+    wildcards: sp_tree_index=26
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 146.
+141 of 208 steps (68%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/reconciliations_estimation/done
+    jobid: 126
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=13
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 151.
+142 of 208 steps (68%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/reconciliations_estimation/done
+    jobid: 153
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=16
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 871.
+143 of 208 steps (69%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/reconciliations/done
+    jobid: 694
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_77/rates.txt
+    wildcards: sp_tree_index=77
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 209.
+144 of 208 steps (69%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/rates.txt
+    jobid: 62
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/reconciliations_estimation/done
+    wildcards: sp_tree_index=6
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 719.
+145 of 208 steps (70%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/reconciliations/done
+    jobid: 712
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_79/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=79
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 584.
+146 of 208 steps (70%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/reconciliations_estimation/done
+    jobid: 396
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=43
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 478.
+147 of 208 steps (71%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/reconciliations_estimation/done
+    jobid: 216
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=23
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 866.
+148 of 208 steps (71%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/reconciliations_estimation/done
+    jobid: 873
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=96
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 91.
+149 of 208 steps (72%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_gene_tree:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/prepared/ale_sampled_species_tree.nwk
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/reconciliations_estimation/done
+    jobid: 756
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/reconciliations_estimation/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=83
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 791.
+150 of 208 steps (72%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/reconciliations/done
+    jobid: 784
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_87/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=87
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:09 2024]
+Finished job 172.
+151 of 208 steps (73%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:09 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/reconciliations/done
+    jobid: 577
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_64/rates.txt
+    wildcards: sp_tree_index=64
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:10 2024]
+Finished job 406.
+152 of 208 steps (73%) done
+[Thu Oct 24 16:20:10 2024]
+Finished job 631.
+153 of 208 steps (74%) done
+[Thu Oct 24 16:20:10 2024]
+Finished job 459.
+154 of 208 steps (74%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:10 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/rates.txt
+    jobid: 458
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/reconciliations_estimation/done
+    wildcards: sp_tree_index=50
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:10 2024]
+Finished job 251.
+155 of 208 steps (75%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:10 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/reconciliations/done
+    jobid: 244
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_27/prepared/ale_sampled_species_tree.nwk
+    wildcards: sp_tree_index=27
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:10 2024]
+Finished job 766.
+156 of 208 steps (75%) done
+[Thu Oct 24 16:20:10 2024]
+Finished job 900.
+157 of 208 steps (75%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:10 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/rates.txt
+    jobid: 899
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/reconciliations_estimation/done
+    wildcards: sp_tree_index=99
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:11 2024]
+Finished job 28.
+158 of 208 steps (76%) done
+[Thu Oct 24 16:20:11 2024]
+Finished job 512.
+159 of 208 steps (76%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:11 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/reconciliations/done
+    jobid: 505
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_56/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=56
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:11 2024]
+Finished job 575.
+160 of 208 steps (77%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:11 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/reconciliations/done
+    jobid: 568
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_63/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=63
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:11 2024]
+Finished job 442.
+161 of 208 steps (77%) done
+[Thu Oct 24 16:20:11 2024]
+Finished job 838.
+162 of 208 steps (78%) done
+[Thu Oct 24 16:20:11 2024]
+Finished job 658.
+163 of 208 steps (78%) done
+[Thu Oct 24 16:20:11 2024]
+Finished job 325.
+164 of 208 steps (79%) done
+[Thu Oct 24 16:20:11 2024]
+Finished job 603.
+165 of 208 steps (79%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:11 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/rates.txt
+    jobid: 602
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_66/reconciliations_estimation/done
+    wildcards: sp_tree_index=66
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:11 2024]
+Finished job 298.
+166 of 208 steps (80%) done
+[Thu Oct 24 16:20:11 2024]
+Finished job 62.
+167 of 208 steps (80%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:11 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/reconciliations/done
+    jobid: 55
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_6/rates.txt
+    wildcards: sp_tree_index=6
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 126.
+168 of 208 steps (81%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/rates.txt
+    jobid: 125
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_13/reconciliations_estimation/done
+    wildcards: sp_tree_index=13
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 82.
+169 of 208 steps (81%) done
+[Thu Oct 24 16:20:12 2024]
+Finished job 415.
+170 of 208 steps (82%) done
+[Thu Oct 24 16:20:12 2024]
+Finished job 153.
+171 of 208 steps (82%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/rates.txt
+    jobid: 152
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_16/reconciliations_estimation/done
+    wildcards: sp_tree_index=16
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 802.
+172 of 208 steps (83%) done
+[Thu Oct 24 16:20:12 2024]
+Finished job 685.
+173 of 208 steps (83%) done
+[Thu Oct 24 16:20:12 2024]
+Finished job 712.
+174 of 208 steps (84%) done
+[Thu Oct 24 16:20:12 2024]
+Finished job 783.
+175 of 208 steps (84%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/rates.txt
+    jobid: 782
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_86/reconciliations_estimation/done
+    wildcards: sp_tree_index=86
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 396.
+176 of 208 steps (85%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/rates.txt
+    jobid: 395
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_43/reconciliations_estimation/done
+    wildcards: sp_tree_index=43
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 458.
+177 of 208 steps (85%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/reconciliations/done
+    jobid: 451
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_50/rates.txt
+    wildcards: sp_tree_index=50
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 216.
+178 of 208 steps (86%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/rates.txt
+    jobid: 215
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_23/reconciliations_estimation/done
+    wildcards: sp_tree_index=23
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 756.
+179 of 208 steps (86%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/rates.txt
+    jobid: 755
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_83/reconciliations_estimation/done
+    wildcards: sp_tree_index=83
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 694.
+180 of 208 steps (87%) done
+[Thu Oct 24 16:20:12 2024]
+Finished job 899.
+181 of 208 steps (87%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule reconcile_all_gene_trees:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/prepared_gene_trees_proof.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/rates.txt
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/reconciliations/done
+    jobid: 892
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/reconciliations/done; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/ale_sampled_species_tree.nwk, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/rates.txt, /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_99/prepared/prepared_gene_trees_proof.txt
+    wildcards: sp_tree_index=99
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:12 2024]
+Finished job 873.
+182 of 208 steps (88%) done
+Select jobs to execute...
+
+[Thu Oct 24 16:20:12 2024]
+rule extract_rates:
+    input: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/reconciliations_estimation/done
+    output: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/rates.txt
+    jobid: 872
+    reason: Missing output files: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/rates.txt; Input files updated by another job: /home/enzo/Documents/git/WP1/DeepGhosts/Output/test/species_tree_96/reconciliations_estimation/done
+    wildcards: sp_tree_index=96
+    resources: tmpdir=/tmp
+
+[Thu Oct 24 16:20:13 2024]
+Finished job 784.
+183 of 208 steps (88%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 602.
+184 of 208 steps (88%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 244.
+185 of 208 steps (89%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 505.
+186 of 208 steps (89%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 577.
+187 of 208 steps (90%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 568.
+188 of 208 steps (90%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 152.
+189 of 208 steps (91%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 125.
+190 of 208 steps (91%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 395.
+191 of 208 steps (92%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 782.
+192 of 208 steps (92%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 755.
+193 of 208 steps (93%) done
+[Thu Oct 24 16:20:13 2024]
+Finished job 215.
+194 of 208 steps (93%) done
+[Thu Oct 24 16:20:14 2024]
+Finished job 872.
+195 of 208 steps (94%) done
+[Thu Oct 24 16:20:14 2024]
+Finished job 892.
+196 of 208 steps (94%) done
+[Thu Oct 24 16:20:14 2024]
+Finished job 451.
+197 of 208 steps (95%) done
+[Thu Oct 24 16:20:14 2024]
+Finished job 55.
+198 of 208 steps (95%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-10-24T161952.470716.snakemake.log
