@@ -2,7 +2,7 @@ from pathlib import Path
 import subprocess
 import shutil
 import os
-
+import logging
 
 def reconcile_all_gene_trees(
     prepared_species_tree,
@@ -37,12 +37,23 @@ def reconcile_all_gene_trees(
         # Construct paths using pathlib
         prepared_gene_tree = prepared_gene_trees_dir / f"prepared_gene_{gene_index}.nwk"
         cmd = f"ALEml_undated {prepared_species_tree} {prepared_gene_tree} delta={duplications} tau={transfers} lambda={losses} seed=42"
-        subprocess.run(cmd,
-                       shell=True,
-                       check=True,
-                       stdout=subprocess.DEVNULL,
-                       stderr=subprocess.PIPE,)
-
+        try:
+            result = subprocess.run(
+                cmd,
+                shell=True,
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,  # Ensure output is returned as a string
+            )
+            # Log the output and error (if any)
+            logging.info(f"Output:\n{result.stdout}")
+            if result.stderr:
+                logging.error(f"Errors:\n{result.stderr}")
+        except subprocess.CalledProcessError as e:
+            logging.error(f"Command failed for Gene Index {gene_index} with error:\n{e.stderr}")
+            # Handle failure or decide to stop further processing
+            break
         # Move the resulting .uml_rec and .uTs files
         source_file_uml = f"{prepared_species_tree.name}_{prepared_gene_tree.name}.uml_rec"
         source_file_uTs = f"{prepared_species_tree.name}_{prepared_gene_tree.name}.uTs"

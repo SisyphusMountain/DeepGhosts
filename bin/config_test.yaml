@@ -1,0 +1,32 @@
+# Test file: if this one runs and outputs sane data, the pipeline should work
+# Paths
+parent_path: ..
+bin_path: ./binaries/
+output_folder: ../Output/test_run/
+
+# Constants and parameters
+n_sp_trees: 2
+n_genes: 2
+start_index: 0
+seed: 105
+distribution: "Poisson"
+parameters_estimation_gene_proportion: 0.5
+
+# Random parameter ranges
+death_rate_low: 0.0
+death_rate_high: 0.0
+transfer_rate_low: 1.0
+transfer_rate_high: 1.0
+sampled_species_low: 5
+sampled_species_high: 10
+extant_species_low: 120
+extant_species_high: 200
+birth_rate_low: 1.0
+birth_rate_high: 1.0
+
+# Filtering parameter : only keep transfers with a certain confidence to generate the
+# dataset
+frequency_threshold: 0.2
+
+# Parameter to normalize the tree heights to correct for the effect of sampling among many species
+normalize_trees: true

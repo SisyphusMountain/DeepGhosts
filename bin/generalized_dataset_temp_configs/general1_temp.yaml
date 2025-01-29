@@ -1,0 +1,40 @@
+# general config 1
+# The goal is to generate data with a wide range of parameters, to verify that the training 
+# of a neural network is still possible despite the diversity of the data.
+# Paths
+parent_path: ..
+bin_path: ./binaries/
+output_folder: /media/enzo/Stockage/Output_general/dataset_1_temp/
+# We create a temporary version of the dataset, verifying that a neural
+# network can still be trained on it despite the smaller number of genes
+# and higher transfer rate
+# We first try this dataset with a small sampling rate and a higher transfer rate
+
+
+# Constants and parameters
+n_sp_trees: 600
+n_genes: 100
+start_index: 0
+seed: 200
+distribution: "Poisson"
+parameters_estimation_gene_proportion: 0.1
+
+# Random parameter ranges
+death_rate_low: 0.0
+death_rate_high: 0.0
+transfer_rate_low: 0.050
+transfer_rate_high: 0.050
+sampled_species_low: 60
+sampled_species_high: 61
+extant_species_low: 200
+extant_species_high: 201
+birth_rate_low: 1.0
+birth_rate_high: 1.0
+
+
+# Filtering parameter : only keep transfers with a certain confidence to generate the
+# dataset
+frequency_threshold: 0.2
+
+normalize_trees: true # we normalize to make sure the trees are comparable
+# (similar number of total transfers)

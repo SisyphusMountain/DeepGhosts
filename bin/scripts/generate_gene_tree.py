@@ -1,7 +1,8 @@
 # scripts/generate_gene_tree.py
-
 import os
 import subprocess
+
+
 def generate_gene_tree(
     complete_species_tree,
     transfers_file,
@@ -20,5 +21,5 @@ def generate_gene_tree(
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
     # Output results
-    print("STDOUT:", result.stdout)
+    # print("STDOUT:", result.stdout)
     print("STDERR:", result.stderr)

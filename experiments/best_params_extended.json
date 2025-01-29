@@ -1,0 +1,6 @@
+{
+    "learning_rate": 0.00033287943124477384,
+    "dropout": 0.23368241838811565,
+    "early_stopping_patience": 37,
+    "lr_patience": 19
+}

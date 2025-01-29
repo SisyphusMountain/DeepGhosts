@@ -1,0 +1,32 @@
+# Line S1
+# Paths
+parent_path: ..
+bin_path: ./binaries/
+output_folder: /media/enzo/Stockage/Output_2/output_s1/
+
+# Constants and parameters
+n_sp_trees: 150
+n_genes: 1000
+start_index: 0
+seed: 100
+distribution: "Poisson"
+parameters_estimation_gene_proportion: 0.1
+
+# Random parameter ranges
+death_rate_low: 0.0
+death_rate_high: 0.0
+transfer_rate_low: 0.025
+transfer_rate_high: 0.025
+sampled_species_low: 60
+sampled_species_high: 61
+extant_species_low: 6000
+extant_species_high: 6001
+birth_rate_low: 1.0
+birth_rate_high: 1.0
+
+
+# Filtering parameter : only keep transfers with a certain confidence to generate the
+# dataset
+frequency_threshold: 0.2
+
+normalize_trees: true

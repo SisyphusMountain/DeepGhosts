@@ -1,0 +1,24 @@
+seed: 1729
+
+# Hyperparameters
+training:
+  learning_rate: 0.1
+  
+  warmup_epochs: 10
+  epochs: 100
+  batch_size: 480
+  scheduler: null
+  loss_type: MSE
+  early_stopping: false
+  patience: 10
+  validate_every_n_epoch: 5
+data:
+  normalize: true
+  split_ratio: 0.8
+  node:
+    in_features: 6
+    out_features: 1 # A ghost length per node
+wandb:
+  project: "deepghosts_test"
+logging:
+  log_plot_every_n_epoch: 20

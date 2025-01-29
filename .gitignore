@@ -8,3 +8,13 @@ bin/__pycache__/
 bin/.snakemake/
 species_tree_9/
 __pycache__/
+cuda-samples/
+experiments/__pycache__/
+experiments/bin/__pycache__/
+wandb
+copy_files.sh
+copy.sh
+results/
+Output*/
+outputs
+.vscode

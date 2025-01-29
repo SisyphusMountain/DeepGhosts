@@ -1,8 +1,8 @@
 # scripts/create_transfers_file.py
-
-from scripts.utils import generate_transfers_file
 import os
 import numpy as np
+
+
 def create_transfers_file(
     branch_length_file,
     transfers_file,

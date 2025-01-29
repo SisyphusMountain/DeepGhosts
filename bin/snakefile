@@ -1,19 +1,15 @@
 #! /usr/bin/env python
+# Modified snakefile: normalize complete tree branch length by the sampled tree branch length
+
 from IPython import embed # debug import
 import os
 from pathlib import Path
 from scripts.utils import generate_seed_from_parameters
 from scripts.params import (
     generate_species_tree_params,
-    get_params_generate_species_tree,
-    get_params_create_transfers_file,
-    get_params_generate_gene_tree,
-    get_params_sampling_trees,
-    get_params_reconcile_gene_tree,
     get_params_extract_rates,
-    get_params_reconcile_all_gene_trees,
 )
-configfile: 'config.yaml'
+
 
 PARENT_PATH = Path(config['parent_path']).resolve()
 BIN_PATH = Path(config['bin_path']).resolve()
@@ -21,14 +17,14 @@ R_SCRIPT = BIN_PATH / "species_tree_generator.R"
 GENE_TRANSFER_SCRIPT = BIN_PATH / "gene_transfer_script"
 SAMPLE_SCRIPT = BIN_PATH / "sample_script"
 EXTRACT_EXTANT_SPECIES_SCRIPT = BIN_PATH / "extract_extant_script"
-
+TRANSLATION_BIN_PATH = BIN_PATH / "Translate_trees"
 ## OUTPUT FOLDERS PATHS
 OUTPUT_FOLDER = Path(config['output_folder']).resolve()
-
+os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 ## OUTPUT FILES PATHS
+DATASET_PICKLE_PATH = OUTPUT_FOLDER / "dataset.pkl"
 OUTPUT_NAME_COMPLETE = "complete_species_tree.nwk"
 OUTPUT_NAME_EXTANT = "extant_species_tree.nwk"
-
 N_SP_TREES = config['n_sp_trees']
 N_GENES = config['n_genes']
 START_INDEX = config['start_index']
@@ -37,16 +33,20 @@ DISTRIBUTION = config['distribution']
 PARAMETERS_ESTIMATION_GENE_PROPORTION = config['parameters_estimation_gene_proportion']
 END_INDEX_ESTIMATION = int(N_GENES * PARAMETERS_ESTIMATION_GENE_PROPORTION)
 END_INDEX = N_GENES
-
+FREQUENCY_THRESHOLD = float(config['frequency_threshold'])
 # Generate species tree parameters
-species_tree_params = generate_species_tree_params(N_SP_TREES, SEED, config)
-
+species_tree_params = generate_species_tree_params(N_SP_TREES, SEED, config, OUTPUT_FOLDER)
+# create modified transfer rate dictionary
+modified_transfer_rates = dict()
+NORMALIZE_TREES = config['normalize_trees']
 rule all:
     input:
         proof_reconciliation=expand(
             OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations/done",
             sp_tree_index=range(N_SP_TREES),
-        )
+        ),
+        dataset=str(OUTPUT_FOLDER / "dataset.pkl"),
+        rates_csv=str(OUTPUT_FOLDER / "global_stats.csv"),
 
 rule generate_species_tree:
     """Simulates species tree with names only on leaves."""
@@ -54,57 +54,78 @@ rule generate_species_tree:
         complete_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / OUTPUT_NAME_COMPLETE),
         extant_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / OUTPUT_NAME_EXTANT),
         branch_length=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "branch_length.txt"),
-
-    params:
-        lambda wildcards: get_params_generate_species_tree(
-            wildcards,
-            species_tree_params,
-            SEED,
-            N_GENES,
-        )
+        normalization_factor=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "normalization_factor.txt"),
     run:
         from scripts.generate_species_tree import generate_species_tree
-        params = params[0]
-        # import IPython; IPython.embed()
+        from scripts.sampling_trees import sample_trees
+        from ete3 import Tree
+        
+        sp_tree_index = int(wildcards.sp_tree_index)
+        params = species_tree_params[sp_tree_index]
         generate_species_tree(
             extant_species=params['extant_species'],
             birth_rate=params['birth_rate'],
             death_rate=params['death_rate'],
-            sp_tree_index=wildcards.sp_tree_index,
+            sp_tree_index=sp_tree_index,
             output_folder=OUTPUT_FOLDER,
             output_complete_tree=output.complete_tree,
             seed=params['seed'],
             r_script=R_SCRIPT,
             extract_extant_script=EXTRACT_EXTANT_SPECIES_SCRIPT,
             total_branch_length_txt=output.branch_length,
-            n_extant_nodes=params['n_extant_nodes'],
+            n_extant_nodes=params['extant_species'],
         )
-
+        if NORMALIZE_TREES:
+            sampled_species_tree = Path(OUTPUT_FOLDER / f"species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk")
+            # now use the sampling script to obtain the sampled tree before normalization
+            from scripts.sampling_trees import sample_trees
+            generated_gene_trees_folder = sampled_species_tree.parent.parent
+            generated_gene_trees_folder = str(generated_gene_trees_folder)
+            sampled_species_tree = str(sampled_species_tree)
+            sample_trees(
+                complete_species_tree=output.complete_tree,
+                extant_species_tree=output.extant_tree,
+                generated_gene_trees_folder=generated_gene_trees_folder,
+                n_sampled_nodes=params['sampled_species'],
+                start_index=0,
+                end_index=0,
+                output_dir=os.path.dirname(sampled_species_tree),
+                seed=params['seed'],
+                sample_script=SAMPLE_SCRIPT,
+            )
+            # Now we have generated the sampled tree. We need to find its sum of branch lengths.
+            sampled_tree = Tree(sampled_species_tree, format=1)
+            total_branch_length = sum([node.dist for node in sampled_tree.traverse()])
+            # The normalization factor is given by the ratio of the expected tree length under a pure-birth process over the actual tree length
+            expected_tree_length = params["sampled_species"]/params["birth_rate"]
+            normalization_factor = expected_tree_length/total_branch_length
+            # save the factor in the output folder
+            with open(output.normalization_factor, "w") as f:
+                f.write(str(normalization_factor))
+        else:
+            normalization_factor = 1
+            with open(output.normalization_factor, "w") as f:
+                f.write(str(normalization_factor))
 rule create_transfers_file:
     """Create the desired number of transfers for each gene tree."""
     input:
+        normalization_factor=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "normalization_factor.txt"),
         branch_length=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "branch_length.txt"),
     output:
         transfers=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "transfers_file.txt")
-
-    params:
-        lambda wildcards: get_params_create_transfers_file(
-            wildcards,
-            species_tree_params,
-            DISTRIBUTION,
-            N_GENES,
-            SEED,
-        )
     run:
         from scripts.create_transfers_file import create_transfers_file
-        params = params[0]
+        sp_tree_index = int(wildcards.sp_tree_index)
+        params = species_tree_params[sp_tree_index]
+        with open(input.normalization_factor, "r") as f:
+            normalization_factor = float(f.read())
         create_transfers_file(
             branch_length_file=input.branch_length,
             transfers_file=output.transfers,
-            n_genes=params['n_genes'],
-            distribution=params['distribution'],
+            n_genes=N_GENES,
+            distribution=DISTRIBUTION,
             seed=params['seed'],
-            transfer_rate=params['transfer_rate'],
+            transfer_rate=params['transfer_rate']*normalization_factor,
         )
 
 rule generate_gene_tree:
@@ -114,21 +135,15 @@ rule generate_gene_tree:
         transfers=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}" / "transfers_file.txt"),
     output:
         generated_gene_trees_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/complete/tree_0/genes/generated_gene_trees_proof.txt"),
-    params:
-        lambda wildcards: get_params_generate_gene_tree(
-            wildcards,
-            species_tree_params,
-            OUTPUT_FOLDER,
-            SEED,
-            N_GENES,
-        )
     run:
         from scripts.generate_gene_tree import generate_gene_tree
-        params = params[0]
+        sp_tree_index = int(wildcards.sp_tree_index)
+        params = species_tree_params[sp_tree_index]
         generate_gene_tree(
             complete_species_tree=input.complete_species_tree,
             transfers_file=input.transfers,
-            output_complete=params['output_complete'],
+            output_complete=os.path.join(
+            OUTPUT_FOLDER, f"species_tree_{sp_tree_index}/complete/"),
             seed=params['seed'],
             gene_transfer_script=GENE_TRANSFER_SCRIPT,
             generated_gene_trees_proof=output.generated_gene_trees_proof,
@@ -143,18 +158,10 @@ rule sampling_trees:
     output:
         sampled_gene_trees_proof=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_gene_trees_proof.txt"),
         sampled_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/sampled/sampled_trees/sampled_species_tree.nwk"),
-    params:
-        lambda wildcards: get_params_sampling_trees(
-            wildcards,
-            species_tree_params,
-            START_INDEX,
-            END_INDEX,
-            SEED,
-            N_GENES,
-        )
     run:
         from scripts.sampling_trees import sample_trees
-        params = params[0]
+        sp_tree_index = int(wildcards.sp_tree_index)
+        params = species_tree_params[sp_tree_index]
         generated_gene_trees_proof = Path(input.generated_gene_trees_proof)
         generated_gene_trees_folder = generated_gene_trees_proof.parent.parent
         generated_gene_trees_folder = str(generated_gene_trees_folder)
@@ -162,14 +169,13 @@ rule sampling_trees:
             complete_species_tree=input.complete_species_tree,
             extant_species_tree=input.extant_species_tree,
             generated_gene_trees_folder=generated_gene_trees_folder,
-            n_sampled_nodes=params['n_sampled_nodes'],
-            start_index=params['start_index'],
-            end_index=params['end_index'],
+            n_sampled_nodes=params['sampled_species'],
+            start_index=START_INDEX,
+            end_index=END_INDEX,
             output_dir=os.path.dirname(output.sampled_gene_trees_proof),
             seed=params['seed'],
             sample_script=SAMPLE_SCRIPT,
         )
-        print(f"sampled gene {wildcards.sp_tree_index}")
         with open(output.sampled_gene_trees_proof, "w+") as f:
             f.write("done!")
 
@@ -209,8 +215,8 @@ rule prepare_gene_tree_for_reconciliation:
         prepare_gene_tree_for_reconciliation(
             sampled_gene_trees_dir=os.path.dirname(input.sampled_gene_trees_proof),
             prepared_gene_trees_dir=os.path.dirname(output.prepared_gene_trees_proof),
-            start_index=params['start_index'],
-            end_index=params['end_index'],
+            start_index=START_INDEX,
+            end_index=END_INDEX,
             prepared_gene_trees_proof=output.prepared_gene_trees_proof,
         )
 
@@ -221,19 +227,13 @@ rule reconcile_gene_tree:
         prepared_species_tree=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/prepared/ale_sampled_species_tree.nwk"),
     output:
         proof_reconciliation_estimation=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations_estimation/done"),
-    params:
-        lambda wildcards: get_params_reconcile_gene_tree(
-            START_INDEX,
-            END_INDEX_ESTIMATION,
-        )
     run:
         from scripts.reconcile_gene_tree import reconcile_gene_tree
-        params = params[0]
         reconcile_gene_tree(
             prepared_species_tree=input.prepared_species_tree,
             prepared_gene_trees_dir=os.path.dirname(input.prepared_gene_tree_proof),
-            start_index=params['start_index'],
-            end_index_estimation=params['end_index_estimation'],
+            start_index=START_INDEX,
+            end_index_estimation=END_INDEX_ESTIMATION,
             reconciliations_estimation_dir=os.path.dirname(output.proof_reconciliation_estimation),
             proof_reconciliation_estimation=output.proof_reconciliation_estimation,
         )
@@ -251,11 +251,10 @@ rule extract_rates:
         )
     run:
         from scripts.extract_rates import extract_rates
-        params = params[0]
         extract_rates(
             reconciliations_estimation_dir=os.path.dirname(input.proof_reconciliations_estimation),
-            start_index=params['start_index'],
-            end_index_estimation=params['end_index_estimation'],
+            start_index=START_INDEX,
+            end_index_estimation=END_INDEX_ESTIMATION,
             rates_file=output.rates,
         )
 
@@ -267,20 +266,43 @@ rule reconcile_all_gene_trees:
         rates=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/rates.txt"),
     output:
         proof_reconciliation=str(OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations/done"),
-    params:
-        lambda wildcards: get_params_reconcile_all_gene_trees(
-            START_INDEX,
-            END_INDEX,
-        )
     run:
         from scripts.reconcile_all_gene_trees import reconcile_all_gene_trees
-        params = params[0]
         reconcile_all_gene_trees(
             prepared_species_tree=input.prepared_species_tree,
             prepared_gene_trees_dir=os.path.dirname(input.prepared_gene_tree_proof),
             rates_file=input.rates,
-            start_index=params['start_index'],
-            end_index=params['end_index'],
+            start_index=START_INDEX,
+            end_index=END_INDEX,
             reconciliations_dir=os.path.dirname(output.proof_reconciliation),
             proof_reconciliation=output.proof_reconciliation,
         )
+
+rule prepare_pytorch_dataset:
+    """
+    Synthesize the generated reconciliation data into a pickled dataset for PyTorch,
+    and generate a csv file with the inferred rates and other information.
+
+    The dataset is a list of pytorch geometric objects, saved in the output folder.
+    The csv file is saved in the output folder as well. 
+    """
+    input:
+        # we need all reconciliations to be done in order to perform this step
+        proof_reconciliation=expand(
+            OUTPUT_FOLDER / "species_tree_{sp_tree_index}/reconciliations/done",
+            sp_tree_index=range(N_SP_TREES),
+        ),
+    output:
+        dataset=str(OUTPUT_FOLDER / "dataset.pkl"),
+        rates_csv=str(OUTPUT_FOLDER / "global_stats.csv"),
+    threads:
+        min(32, workflow.cores)
+    run:
+        print("workflow cores", type(workflow.cores), workflow.cores)
+        print("threads", type(threads), threads)
+        from scripts.create_pytorch_dataset import process_all_species_trees
+        process_all_species_trees(dataset_path=str(OUTPUT_FOLDER),
+                                    num_processes=threads,
+                                    frequency_threshold=FREQUENCY_THRESHOLD,
+                                    pickle_path=str(DATASET_PICKLE_PATH),
+                                    translation_bin_path=str(TRANSLATION_BIN_PATH),)
