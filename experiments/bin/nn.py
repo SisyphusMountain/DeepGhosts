@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch_geometric
 import einops
-from torch_geometric.utils import to_undirected, to_dense_batch
+from torch_geometric.utils import to_dense_batch
 
 
 class LinearModel(nn.Module):
