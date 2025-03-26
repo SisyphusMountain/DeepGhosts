@@ -1,0 +1,32 @@
+defaults:
+  - base_cfg
+  - _self_
+
+model: "mlp"
+
+mlp:
+  hidden_layers: [32, 32]
+  dropout: 0.0
+
+# Hyperparameters
+training:
+  lr: 5.0e-4
+  beta_1: 0.9
+  beta_2: 0.999
+  eps: 1.0e-8
+  weight_decay: 1.0e-4
+
+  warmup_epochs: 10
+  epochs: 1000
+  batch_size: 48
+  scheduler: null
+  loss_type: "MSE"
+  early_stopping: true
+  keep_top_k: 1
+  patience: 100
+  validate_every_n_epoch: 5
+  log_activations: true
+
+wandb:
+  run_name: "mlp"
+  save_dir: "training_results/mlp"

@@ -21,7 +21,7 @@ def generate_species_tree(
     birth_rate,
     death_rate,
     sp_tree_index,
-    output_folder,
+    output_folder,  
     output_complete_tree,
     seed,
     r_script,
