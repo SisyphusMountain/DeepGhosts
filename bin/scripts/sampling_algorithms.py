@@ -13,7 +13,7 @@ def give_depth(tree):
 
 def uniform_sample_leaves(tree, k, seed):
     random.seed(seed)
-    leaves = [leaf for leaf in tree.iter_leaves()]
+    leaves = [leaf.name for leaf in tree.iter_leaves()]
     sampled_leaves = random.sample(leaves, k)
     return sampled_leaves
 
@@ -36,7 +36,7 @@ def diversified_sample_leaves(tree, k, seed):
         for flag, child in zip(flags, children):
             if not flag:
                 sampled_leaves.append(random.choice(child.get_leaves()))
-    return sampled_leaves
+    return [leaf.name for leaf in sampled_leaves]
 
 def min_pairwise_sum(tree, k, take_root=True):
     """Outputs the set of k leaves such that the resulting tree has minimal sum
@@ -96,7 +96,7 @@ def min_pairwise_sum(tree, k, take_root=True):
 
     dp_table = compute_dp(tree)
     min_cost, leaves_list = dp_table.get(k, (math.inf, []))
-    return min_cost, leaves_list
+    return min_cost, [leaf.name for leaf in leaves_list]
 
 def sampling(tree, k, sampling_mode, seed, take_root=True):
     if sampling_mode == "uniform":

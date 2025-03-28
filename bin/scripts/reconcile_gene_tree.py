@@ -10,13 +10,11 @@ def reconcile_gene_tree(
     start_index,
     end_index_estimation,
     reconciliations_estimation_dir,
-    proof_reconciliation_estimation,
-):
+    ):
     # Convert string paths to Path objects
     prepared_species_tree = Path(prepared_species_tree).resolve()
     prepared_gene_trees_dir = Path(prepared_gene_trees_dir).resolve()
     reconciliations_estimation_dir = Path(reconciliations_estimation_dir).resolve()
-    proof_reconciliation_estimation = Path(proof_reconciliation_estimation).resolve()
 
     # Ensure the reconciliations directory exists
     reconciliations_estimation_dir.mkdir(parents=True, exist_ok=True)
@@ -45,7 +43,4 @@ def reconcile_gene_tree(
         # Move the generated files to their target locations
         shutil.move(source_file_uml, target_file_uml)
         shutil.move(source_file_uTs, target_file_uTs)
-
-    # Write proof of reconciliation completion
-    with proof_reconciliation_estimation.open("w") as f:
-        f.write("done!")
+        

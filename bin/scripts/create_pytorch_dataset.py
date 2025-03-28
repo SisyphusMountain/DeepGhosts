@@ -120,36 +120,41 @@ def process_tree_directory(args):
     tree_dir: str
         The directory containing all the reconciliation files
     """
-    tree_dir, translation_bin_path = args
+    tree_dir = args
     # Initialize the output directory
     output_dir = os.path.join(tree_dir, "processed_data_for_pytorch")
-    
+
     # Remove the output directory if it exists
     if os.path.exists(output_dir):
         shutil.rmtree(output_dir)
     
     # Create the output directory
     os.makedirs(output_dir, exist_ok=True)
-    
+    ale_tree_path = os.path.join(tree_dir, "ale_trees/SampledSpeciesTree_ale.nwk")
+    original_tree_path = os.path.join(tree_dir, "SAMPLE_1/SampledSpeciesTree.nwk")
+    translation_df_path = os.path.join(output_dir, "translations.csv")
+    translate_trees(ale_tree_path,
+                    original_tree_path,
+                    translation_df_path)
     # Get the stats dataframe
-    stats_df = stats_df_fn(tree_dir + "/reconciliations")
+    stats_df = stats_df_fn(tree_dir + "/reconciliations_all")
     stats_df.to_csv(os.path.join(output_dir, "stats.csv"), index=False)
     
     # Get the transfers dataframe
-    transfers_df = transfers_df_fn(tree_dir + "/reconciliations")
+    transfers_df = transfers_df_fn(tree_dir + "/reconciliations_all")
     transfers_df.to_csv(os.path.join(output_dir, "transfers.csv"), index=False)
 
-    complete_tree_path = os.path.join(tree_dir, "complete_species_tree.nwk")
+    complete_tree_path = os.path.join(tree_dir, "T/CompleteTree.nwk")
     shutil.copy(complete_tree_path, os.path.join(output_dir, "complete_species_tree.nwk"))
 
     rename_internal_nodes(complete_tree_path, os.path.join(output_dir, "complete_species_tree_internal_nodes_renamed.nwk"))
 
-    sampled_tree_path = os.path.join(tree_dir, "sampled/sampled_trees/sampled_species_tree.nwk")
+    sampled_tree_path = os.path.join(tree_dir, "SAMPLE_1/SampledSpeciesTree.nwk")
     shutil.copy(sampled_tree_path, os.path.join(output_dir, "sampled_species_tree.nwk"))
     
     newick_pattern = re.compile(r"S:\s*(\([^;]+;)", re.DOTALL)
 
-    sampled_ale_tree_path = os.path.join(tree_dir, "reconciliations/reconciliation_0_uml")
+    sampled_ale_tree_path = os.path.join(tree_dir, "reconciliations_all/reconciliation_1_uml")
     sampled_ale_tree_target_path = os.path.join(output_dir, "ale_sampled_species_tree.nwk")
     if os.path.exists(sampled_ale_tree_path):
         with open(sampled_ale_tree_path, 'r') as file:
@@ -161,18 +166,6 @@ def process_tree_directory(args):
                 file.write(newick)
         else:
             print(f"Newick pattern not found in {sampled_ale_tree_path}")
-    # TODO: remove the hardcoded path
-    translation_command = [translation_bin_path,
-                           tree_dir + "/processed_data_for_pytorch/sampled_species_tree.nwk",
-                           tree_dir + "/processed_data_for_pytorch/ale_sampled_species_tree.nwk",
-                           tree_dir + "/processed_data_for_pytorch"]
-    
-    result = subprocess.run(translation_command, capture_output=True, text=True)
-    
-    if result.returncode == 0:
-        print(result.stdout)
-    else:
-        print("Error executing command:")
 
 def is_part_of_sampled_tree(complete_tree, sampled_tree):
     """This function takes a complete tree and a sampled tree and marks nodes that are either present in the sampled tree,
@@ -200,6 +193,46 @@ def lists_to_tensors(sampled_tree):
         node.add_features(times_list=torch.tensor(node.times_list, dtype=torch.float32))
     return sampled_tree
 
+def translate_trees(ale_tree_path, original_tree_path, output_path):
+    """
+    This function translates the names of the nodes in ale_tree_path to the original names in original_tree_path.
+    It writes the translated tree to output_path.
+    """
+    # Read the trees
+    ale_tree = Tree(ale_tree_path, format=1)
+    original_tree = Tree(original_tree_path, format=1)
+
+    mapping = {node.name:node.name for node in ale_tree.get_leaves()}
+    for node in ale_tree.traverse(strategy="postorder"):
+        if node.is_leaf():
+            continue
+        else:
+            # the node has a child, and this child already has a mapping
+            left = node.get_children()[0]
+            right = node.get_children()[1]
+            if left.name in mapping:
+                # find the left name in the original tree
+                original_left = original_tree.search_nodes(name=mapping[left.name])[0]
+                # go to its parent
+                original_left = original_left.up
+                # find the original name of the parent
+                original_parent = original_tree.search_nodes(name=original_left.name)[0]
+                # add the mapping
+                mapping[node.name] = original_parent.name
+            elif right.name in mapping:
+                # find the right name in the original tree
+                original_right = original_tree.search_nodes(name=mapping[right.name])[0]
+                # go to its parent
+                original_right = original_right.up
+                # find the original name of the parent
+                original_parent = original_tree.search_nodes(name=original_right.name)[0]
+                # add the mapping
+                mapping[node.name] = original_parent.name
+    # We now write the mapping as a csv with columns ale, original using pandas
+    mapping_df = pd.DataFrame(list(mapping.items()), columns=["ale", "original"])
+    mapping_df.to_csv(output_path, index=False)
+
+    
 def process_trees(complete_tree, sampled_tree):
     """Attributes the ghost nodes' times to the corresponding nodes in the sampled tree."""
     # Initialize an empty times_list attribute for each node in the sampled tree
@@ -685,7 +718,11 @@ def tree_to_pyg(sampled_tree, transfers_df):
 
 
 def files_to_pyg_tree(complete_tree_path, sampled_tree_path, transfers_df_path, translation_df_path, frequency_threshold):
-    complete_tree = Tree(complete_tree_path, format=1)
+    try:
+        complete_tree = Tree(complete_tree_path, format=1)
+    except Exception as e:
+        print(f"Error reading complete tree from {complete_tree_path}: {e}")
+        raise Exception("Failed to read complete tree.") 
     sampled_tree = Tree(sampled_tree_path, format=1)
     complete_tree, sampled_tree = is_part_of_sampled_tree(complete_tree, sampled_tree)
     sampled_tree = process_trees(complete_tree, sampled_tree)
@@ -769,7 +806,7 @@ def process_single_tree(args):
     i, frequency_threshold, dataset_path = args
     return process_tree(i, frequency_threshold, dataset_path)
 
-def process_all_species_trees(dataset_path, num_processes=None, frequency_threshold=0.1, pickle_path=None, translation_bin_path=None):
+def process_all_species_trees(dataset_path, num_processes=None, frequency_threshold=0.1, pickle_path=None):
     """
     Processes all species trees found in the specified dataset path in parallel and saves the results as a pickled file.
 
@@ -783,20 +820,12 @@ def process_all_species_trees(dataset_path, num_processes=None, frequency_thresh
         list: List of processed PyG trees.
     """
     num_processes = num_processes or 1
-    if not translation_bin_path:
-        raise ValueError("translation_bin_path is required.")
     # Detect species_tree folders
     tree_indices = detect_species_tree_folders(dataset_path)
     print(f"Detected {len(tree_indices)} species trees.")
     tree_directories = [os.path.join(dataset_path, f"species_tree_{i}") for i in range(len(tree_indices))]
-    with concurrent.futures.ThreadPoolExecutor(max_workers=num_processes) as executor:
-        futures = [executor.submit(process_tree_directory, (tree_dir, translation_bin_path)) for tree_dir in tree_directories]
-        for future in concurrent.futures.as_completed(futures):
-            try:
-                future.result()
-            except Exception as exc:
-                print(f"An error occurred: {exc}")
-    # Run parallel processing
+    for tree_directory in tree_directories:
+        process_tree_directory(tree_directory)
     with ProcessPoolExecutor(max_workers=num_processes) as executor:
         # Prepare arguments for each process
         args_list = [(i, frequency_threshold, dataset_path) for i in tree_indices]
@@ -823,7 +852,6 @@ if __name__ == "__main__":
     parser.add_argument("--dataset_path", type=str, required=True, help="Base path to the dataset.")
     parser.add_argument("--frequency_threshold", type=float, default=0.1, help="Frequency threshold for filtering transfers.")
     parser.add_argument("--pickle_path", type=str, required=True, help="Path to save the pickled results.")
-    parser.add_argument("--translation_bin_path", type=str, required=True, help="Path to the translation binary.")
     args = parser.parse_args()
 
     # Call the main function with command-line arguments
@@ -832,5 +860,4 @@ if __name__ == "__main__":
         num_processes=args.num_processes,
         frequency_threshold=args.frequency_threshold,
         pickle_path=args.pickle_path,
-        translation_bin_path=args.translation_bin_path
     )

@@ -11,14 +11,12 @@ def reconcile_all_gene_trees(
     start_index,
     end_index,
     reconciliations_dir,
-    proof_reconciliation,
 ):
     # Convert paths to Path objects
     prepared_species_tree = Path(prepared_species_tree).resolve()
     prepared_gene_trees_dir = Path(prepared_gene_trees_dir).resolve()
     rates_file = Path(rates_file).resolve()
     reconciliations_dir = Path(reconciliations_dir).resolve()
-    proof_reconciliation = Path(proof_reconciliation).resolve()
 
     # Create the reconciliations directory if it doesn't exist
     reconciliations_dir.mkdir(parents=True, exist_ok=True)
@@ -64,6 +62,3 @@ def reconcile_all_gene_trees(
         shutil.move(source_file_uTs, target_file_uTs)
     
     os.chdir(original_dir)
-    # Write proof that the reconciliation is complete
-    with proof_reconciliation.open("w+") as f:
-        f.write("done!")
